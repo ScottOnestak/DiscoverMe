@@ -4,7 +4,7 @@
 
 DiscoverMe
 
-**Target Audiance:**
+**Target Audience:**
 
 Travelers or those looking to discover new things to do
 
@@ -12,7 +12,7 @@ Travelers or those looking to discover new things to do
 
 When traveling, you often know the major sites to see, but often times the best things to do and places to see are right under your nose.  Yet, you have no idea unless you want to sift through endless pages of google searches or stumble upon it by chance. This application allows those travelling to easily discover things to do and places to go based on their interests as well as deal with the culture shock associated with other areas of the globe.
 
-Similarly, sometimes you live somewhere your whole life and never discover what is right under your nose.  This will also allow users to discover activities and places that have been hiding under their noses this whole time.
+Similarly, sometimes you live somewhere your whole life and never discover what is nearby.  This will also allow users to discover activities and places that have been hiding just beyond their walls this whole time.
 
 **Minimum Project Compliance:**
 
