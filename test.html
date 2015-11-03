@@ -1,0 +1,90 @@
+<!--Updated Version for Login -->
+
+<html>
+	<head>
+
+		<title>DiscoverMe</title>
+
+		<style type="text/css">
+			h1 {
+				font-size: 100px;
+				font-family: sans-serif;
+			}
+			img {
+				width: 300px;
+			}
+			
+		</style>
+
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript">
+
+		$(document).ready(function(){
+			//ajax error function
+			$(document).ajaxError(function() {
+    			alert("Sorry, there was a problem!");
+  			});
+
+			//user wishes to log into their account
+			$("#login").click(function(){
+				console.log("Login Clicked");
+				$.ajax({
+
+
+				});
+			});
+
+			//user wishes to create a new account
+			$("#create").click(function(){
+				console.log("Create Clicked");
+				$.ajax({
+					url: "users/",
+					type: "POST",
+					dataType: "text",
+
+					data: { username: $("#username").val(),
+							password: $("#password").val(),
+							city: $("#city").val(),
+							state: $("#state").val(),
+							country: $("#country").val()},
+
+					success: function(data){
+						console.log("Success");
+						if(data == 'OK'){
+							console.log("Successfully created new user");
+						} else {
+							alert("Error");
+						}
+					},
+
+				});
+			});
+		})
+
+
+		</script>
+	</head>
+
+	<body>
+		<h1><center>DiscoverMe</center></h1>
+		<img src="Guo.png"/>
+		<h1>Login</h1>
+		Username:<input id="username" type="text" size = "20"/>
+		Password: <input id="password" type = "text" size = "20"> </br>
+		<button id="login">Login</button>
+
+		<h2>Create an Account</h2>
+		Username:<input id="username" type="text" size = "20"/>
+		Password: <input id="password" type = "text" size = "20"> </br>
+		Current City:<input id="city" type = "text" size = "20">
+		State:<input id="state" type = "text" size= "20">
+		Country:<select id="country">
+			<option id=""></option>
+			<option id="US">United States</option>
+			<option id="AU">Australia</option>
+			<option id="UK">United Kingdom</option>
+		</select><br>
+		<button id="create">Create Account</button>
+
+	</body>
+</html>
