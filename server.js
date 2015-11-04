@@ -2,7 +2,7 @@
 //front end currently localhost/test.html
 
 var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('./names.db');
+var db = new sqlite3.Database('/users.db');
 
 db.serialize(function() {
 	if(!exists){
