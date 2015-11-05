@@ -1,6 +1,22 @@
 //The server for the project
 //front end currently localhost/test.html
 
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('/users.db');
+
+db.serialize(function() {
+	if(!exists){
+		db.run("create table peeps (
+			username varchar(20) NOT NULL PRIMARY KEY, 
+			password varchar(20) NOT NULL, 
+			city varchar(30) NOT NULL, 
+			state varchar(30) NOT NULL, 
+			country varchar(30) NOT NULL)");
+	}
+    
+//}
+
+
 var express = require('express');
 var app = express();
 
@@ -14,6 +30,12 @@ app.use(bodyParser.urlencoded({extended: true})); //support encoded bodies
 //      http://localhost:3000/test.html
 //will send the file static_file/test.html to the user's web browser
 app.use(express.static('static_files'));
+
+//<script src="//cdnjs.cloudflare.com/ajax/libs/json2/20110223/json2.js"></script>
+//<script src="https://raw.github.com/andris9/jStorage/master/jstorage.js"></script>
+
+//var db = openDatabase('people', '1.0', 'database of people', 2 * 1024 * 1024);
+
 
 
 //Rest API
@@ -30,8 +52,9 @@ app.post('/users', function(req,res){
 		return; //return early
 	}
 
-	//add to database here
-
+	db.run("INSERT into peeps (username,password,city,state,country) VALUES (?,?,?,?,?)", [username,password,city,state,country]);
+	res.send('OK');
+	
 });
 
 
