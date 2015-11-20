@@ -1,0 +1,61 @@
+<!-- login page -->
+
+<html>
+	<head>
+
+		<style type="text/css">
+			h1{
+				font-size: 50px;
+				font-family: sans-serif;
+				color: white;
+				text-shadow: 2px 2px 0px #FF00FF
+			}
+			h2{
+				color: white;
+				text-shadow: 1px 1px 0px #00FF00
+			}
+			body{
+				background-color: black;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover; 
+			}
+			h3{
+				color: white;
+				text-shadow: 1px 1px 0px #FFFF00
+			}
+			a{
+				color:white;
+				font-style: italic;
+				text-shadow: 1px 1px 0px #FF14C4
+			}
+			a:hover{
+				color:lime;
+				font-style: normal;
+				text-shadow: 1px 1px 0px #FF00FF
+			}
+			
+		</style>
+
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript">
+
+		$(document).ready(function(){
+			$("#person").append("username:  " + localStorage.getItem('username'));
+			$("#location").append("location:  " + localStorage.getItem('city') + ", " + localStorage.getItem('state') + ", " + localStorage.getItem('country'));
+		})
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<h1>"You have successfully logged in!"</h1>
+		<h2><div id = "person"></div></h2>
+		<h2><div id = "location"></div></h2>
+		<img align="center" src="smile.gif" style="width: 500px;"/>
+		
+	</body>
+</html>

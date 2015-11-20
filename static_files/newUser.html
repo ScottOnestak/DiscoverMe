@@ -31,6 +31,16 @@
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript">
 
+		function goToHomePage(){
+			window.location = 'http://localhost:3000/login.html';
+		}
+
+		$(document).ready(function(){
+			//ajax error function
+			$(document).ajaxError(function() {
+    			alert("Sorry, there was a problem!");
+  			});
+
 			//user wishes to create a new account
 			$("#create").click(function(){
 				console.log("Create Clicked");
@@ -38,24 +48,33 @@
 					url: "users/",
 					type: "POST",
 					dataType: "text",
-
 					data: { username: $("#username").val(),
 							password: $("#password").val(),
 							city: $("#city").val(),
 							state: $("#state").val(),
 							country: $("#country").val()},
-
 					success: function(data){
 						console.log("Success");
 						if(data == 'OK'){
 							console.log("Successfully created new user");
+							localStorage['username'] = $("#username").val();
+							localStorage['password'] = $("#password").val();
+							localStorage['city'] = $("#city").val();
+							localStorage['state'] = $("#state").val();
+							localStorage['country'] = $("#country").val();
+							goToHomePage();
 						} else {
 							alert("Error");
+							localStorage.clear();
 						}
 					},
-
+					error: function(){
+						console.log("You have encountered an error");
+						localStorage.clear();
+					}
 				});
 			});
+		});
 
 		</script>
 	</head>
@@ -80,5 +99,4 @@
 		</h2>
 
 	</body>
-	</html>
-
+</html>
