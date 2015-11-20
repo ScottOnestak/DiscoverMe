@@ -58,21 +58,29 @@ app.post('/users', function(req,res){
 	
 });
 
+//user get request
 app.get('/users/*/*', function(req,res){
 	var usernameLookup = req.params[0];
-	var pass = req.params[1];;
+	var pass = req.params[1];
+	var sent = 0;
 	console.log(usernameLookup);
 	console.log(pass);
-	db.each('SELECT username, password, city, state, country FROM peeps', function(err, row){
-		var rowUser = row.username;
-		var rowPass = row.password;
-		console.log(rowUser + "   " + rowPass);
-		if(rowUser == usernameLookup & rowPass == pass){
+	db.each('SELECT * FROM peeps', function(err, row){
+		console.log(row.username + "   " + row.password);
+		if(row.username == usernameLookup & row.password == pass){
+			console.log(row);
 			res.send(row);
 			return;
 		}
 	});
-	res.send({});
+});
+
+//user delete request
+app.delete('/users/*/*', function(req,res){
+	var usernameLookup = req.params[0];
+	var pass = req.params[1];
+	db.delete('DELETE * FROM peeps where username == usernameLookup AND password == pass');
+	res.send('OK');
 });
 
 
