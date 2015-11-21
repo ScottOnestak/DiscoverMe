@@ -44,7 +44,11 @@
 		$(document).ready(function(){
 			$("#person").append("username:  " + localStorage.getItem('username'));
 			$("#location").append("location:  " + localStorage.getItem('city') + ", " + localStorage.getItem('state') + ", " + localStorage.getItem('country'));
-		})
+			$('#logout').click(function(){
+				localStorage.clear();
+				//redirect to main page here
+			});
+		});
 
 		</script>
 
@@ -56,6 +60,7 @@
 		<h2><div id = "person"></div></h2>
 		<h2><div id = "location"></div></h2>
 		<img align="center" src="smile.gif" style="width: 500px;"/>
+		<button id = "logout">Logout</button>
 		
 	</body>
 </html>
