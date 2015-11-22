@@ -73,6 +73,7 @@ app.get('/users/*/*', function(req,res){
 			return;
 		}
 	});
+	res.send(JSON.stringify({failedUsername: usernameLookup, failedPassword: pass}));
 });
 
 //user delete request
