@@ -1,4 +1,8 @@
-<!--Updated Version for Login -->
+<!-- failed login page
+	 sources: http://stackoverflow.com/questions/4533810/html-text-color-in-disabled-text-box
+	 		  http://www.w3schools.com/tags/ref_colorpicker.asp
+	 		  http://stackoverflow.com/questions/4820153/append-string-to-textbox-contents
+-->
 
 <html>
 	<head>
@@ -7,17 +11,17 @@
 
 		<style type="text/css">
 			h1{
-				font-size: 100px;
+				font-size: 70px;
 				font-family: sans-serif;
 				color: white;
-				text-shadow: 2px 2px 0px #FF00FF
+				text-shadow: 3px 3px 2px #99ff99;
 			}
 			h2{
 				color: white;
-				text-shadow: 1px 1px 0px #00FF00
+				text-shadow: 1px 1px 0px #99ff99;
 			}
 			body{
-				background: url(cats.jpg) no-repeat;
+				background: url(adele.png) no-repeat;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
@@ -25,17 +29,25 @@
 			}
 			h3{
 				color: white;
-				text-shadow: 1px 1px 0px #FFFF00
+				text-shadow: 1px 1px 0px #0d0d0d;
 			}
 			a{
 				color:white;
 				font-style: italic;
-				text-shadow: 1px 1px 0px #FF14C4
+				text-shadow: 1px 1px 0px #0d0d0d;
 			}
 			a:hover{
-				color:lime;
+				color:#99ff99;
 				font-style: normal;
-				text-shadow: 1px 1px 0px #FF00FF
+				text-shadow: 1px 1px 0px #0d0d0d;
+			}
+			#hello{
+
+				color:#ffff80;
+				font-family: sans-serif;
+				font-size: 30px;
+				text-shadow: 2px 2px 1px black;
+				text-indent:500px;
 			}
 			
 		</style>
@@ -47,9 +59,7 @@
 			window.location = 'http://localhost:3000/login.html';
 		}
 
-		function goToFailedLogin(){
-			window.location = 'http://localhost:3000/failed.html';
-		}
+
 
 		$(document).ready(function(){
 			//ajax error function
@@ -57,28 +67,14 @@
     			alert("Sorry, there was a problem!");
   			});
 
-			if(localStorage.getItem('username') != null & localStorage.getItem('password') != null){
-				console.log(localStorage.getItem('password'));
-				var pass = localStorage.getItem('password');
-				$.ajax({
-					url: "users/" + localStorage.getItem('username') + "/" + localStorage.getItem('password'),
-					type: "GET",
-					dataType: "json",
-					success: function(data){
-						if(data.username){
-							console.log("LocalStorage login");
-							goToHomePage();
-						} else {
-							console.log("Cannot find user");
-							localStorage.clear();
-						}
-					},
-					error: function(){
-						console.log("Cannot find user");
-						localStorage.clear();
-					}
-				});
-			}
+			//add the incorrect username and password to their appropriate text boxes
+  			$('#username').val(function(index, val){
+  				return val + localStorage.getItem('failedUsername');
+  			});
+
+  			$('#password').val(function(index, val){
+  				return val + localStorage.getItem('failedPassword');
+  			});
 
 			//user wishes to log into their account
 			$("#login").click(function(){
@@ -89,9 +85,8 @@
 					dataType: "json",
 					success: function(data){
 						console.log("success");
-						console.log(data);
 						if(data.username){
-							console.log('found');
+							//do stuff here
 							localStorage['username'] = data.username;
 							localStorage['password'] = data.password;
 							localStorage['city'] = data.city;
@@ -99,23 +94,16 @@
 							localStorage['country'] = data.country;
 							console.log("login successful");
 							goToHomePage();
-						} else if(data.failedUsername) {
+						} else {
 							console.log("Cannot find user");
 							localStorage.clear();
-							localStorage['failedUsername'] = data.failedUsername;
-							localStorage['failedPassword'] = data.failedPassword;
-							goToFailedLogin();
-						} else {
-							console.log("Houston, we've got a problem!");
 						}
 					},
 					error: function() {
 						console.log("Error");
+						alert("Username or password incorrect");
 						localStorage.clear();
-						localStorage['failedUsername'] = $('username').val();
-						localStorage['failedPassword'] = $('password').val();
-						goToFailedLogin();
-					},
+					}
 				});
 			});
 		});
@@ -124,12 +112,14 @@
 	</head>
 
 	<body>
-
 		<h1><center>DiscoverMe</center></h1>
+		<p id = "hello">Hello.  It's me...</p>
+		<p id = "hello">Sorry, Adele doesn't know who this is.</p>
+		<p id ="hello">Please check your username and password.</p>
 		<h2 align="center">Login</h2>
 		<h3>
-		<p align="center">Username:  <input id="username" type="text" size = "20"/></p>
-		<p align="center">Password:  <input id="password" type = "text" size = "20"> </br></p>
+		<p align="center">Username:  <input id="username" type="text" style="background-color:#ff4d4d; color:black" value="" size = "20"/></p>
+		<p align="center">Password:  <input id="password" type = "text" style="background-color:#ff4d4d; color:black" value="" size = "20"> </br></p>
 		<p align="center"><button id="login">Login</button></p>
 		</h3>
 		<p align="center"><a href="http://localhost:3000/newUser.html">New User?</a></p>
