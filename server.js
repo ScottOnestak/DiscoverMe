@@ -3,26 +3,15 @@
 //used the code from lectures 11 and 12 to implement the REST API
 //implementation of sqlite3 learned and taken from here https://github.com/mapbox/node-sqlite3
 
-var fs = require("fs");
-var file = "theDatabase.db";
-var exists = fs.existsSync(file);
-
-if(!exists){
-	fs.openSync(file, "w");
-}
-
-var sqlite3 = require("sqlite3").verbose();
-var db = new sqlite3.Database(file);
-
-db.serialize(function() {
-	if(!exists){
-		db.run("CREATE TABLE peeps (username String NOT NULL PRIMARY KEY, password string NOT NULL, city string NOT NULL, state string NOT NULL, country string NOT NULL)");
-		db.run("CREATE TABLE locate (name String NOT NULL PRIMARY KEY, type String NOT NULL, city String NOT NULL, country String NOT NULL");
-	}  
-});
-
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var sqlite3 = require("sqlite3").verbose();
+var db = new sqlite3.Database('theDatabase.db');
+
+db.run("CREATE TABLE IF NOT EXISTS peeps (username varchar(20) PRIMARY KEY, password varchar(20), city varchar(20), state varchar(20), country varchar(20))");
+db.run("CREATE TABLE IF NOT EXISTS locate (name varchar(20) PRIMARY KEY, type varchar(20), city varchar(20), country varchar(20))");
+
 
 //reqired to support parsing of POST request bodies
 var bodyParser = require('body-parser');
@@ -60,20 +49,26 @@ app.post('/users', function(req,res){
 
 //user get request
 app.get('/users/*/*', function(req,res){
-	var usernameLookup = req.params[0];
-	var pass = req.params[1];
-	var sent = 0;
-	console.log(usernameLookup);
-	console.log(pass);
-	db.each('SELECT * FROM peeps', function(err, row){
-		console.log(row.username + "   " + row.password);
-		if(row.username == usernameLookup & row.password == pass){
-			console.log(row);
-			res.send(row);
+	db.get('SELECT * FROM peeps WHERE username=?', req.params[0], function(err,rows){
+		if(err){
+			res.send({status: "ERROR"});
 			return;
+		} else {
+			console.log(rows);
+			if(rows == undefined){
+				res.send({failedUsername: req.params[0], failedPassword: req.params[1]});
+				return;
+			}
+			if(rows.password == req.params[1]){
+				res.send(rows);
+				return;	
+			} else {
+				res.send({failedUsername: req.params[0], failedPassword: req.params[1]});
+				return;
+			}	
 		}
 	});
-	res.send(JSON.stringify({failedUsername: usernameLookup, failedPassword: pass}));
+	return;
 });
 
 //user delete request
