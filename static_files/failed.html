@@ -45,9 +45,9 @@
 
 				color:#ffff80;
 				font-family: sans-serif;
-				font-size: 30px;
+				font-size: 25px;
 				text-shadow: 2px 2px 1px black;
-				text-indent:500px;
+				text-align: center;
 			}
 			
 		</style>
@@ -77,6 +77,7 @@
   			});
 
 			//user wishes to log into their account
+			//user wishes to log into their account
 			$("#login").click(function(){
 				console.log("Login Clicked");
 				$.ajax({
@@ -85,8 +86,9 @@
 					dataType: "json",
 					success: function(data){
 						console.log("success");
+						console.log(data);
 						if(data.username){
-							//do stuff here
+							console.log('found');
 							localStorage['username'] = data.username;
 							localStorage['password'] = data.password;
 							localStorage['city'] = data.city;
@@ -94,16 +96,23 @@
 							localStorage['country'] = data.country;
 							console.log("login successful");
 							goToHomePage();
-						} else {
+						} else if(data.failedUsername) {
 							console.log("Cannot find user");
 							localStorage.clear();
+							localStorage['failedUsername'] = data.failedUsername;
+							localStorage['failedPassword'] = data.failedPassword;
+							goToFailedLogin();
+						} else {
+							console.log("Houston, we've got a problem!");
 						}
 					},
 					error: function() {
 						console.log("Error");
-						alert("Username or password incorrect");
 						localStorage.clear();
-					}
+						localStorage['failedUsername'] = $('username').val();
+						localStorage['failedPassword'] = $('password').val();
+						goToFailedLogin();
+					},
 				});
 			});
 		});
@@ -114,8 +123,9 @@
 	<body>
 		<h1><center>DiscoverMe</center></h1>
 		<p id = "hello">Hello.  It's me...</p>
-		<p id = "hello">Sorry, Adele doesn't know who this is.</p>
-		<p id ="hello">Please check your username and password.</p>
+		<p id = "hello">Adele doesn't know who this is.</p>
+		<p id ="hello">Please check your username and</p>
+		<p id = "hello">password before trying again.</p>
 		<h2 align="center">Login</h2>
 		<h3>
 		<p align="center">Username:  <input id="username" type="text" style="background-color:#ff4d4d; color:black" value="" size = "20"/></p>

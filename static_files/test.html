@@ -43,20 +43,28 @@
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript">
 
+		//go to home page on a successful login
 		function goToHomePage(){
 			window.location = 'http://localhost:3000/login.html';
 		}
 
+		//go to this page on a failed login
 		function goToFailedLogin(){
 			window.location = 'http://localhost:3000/failed.html';
 		}
 
+		//after page has loaded
 		$(document).ready(function(){
 			//ajax error function
 			$(document).ajaxError(function() {
     			alert("Sorry, there was a problem!");
   			});
 
+			//remove unnecessary localStorage items
+  			localStorage.removeItem('failedUsername');
+  			localStorage.removeItem('failedPassword');
+
+  			//if there is a username and password, check if in database and open account if applicable
 			if(localStorage.getItem('username') != null & localStorage.getItem('password') != null){
 				console.log(localStorage.getItem('password'));
 				var pass = localStorage.getItem('password');
@@ -65,16 +73,19 @@
 					type: "GET",
 					dataType: "json",
 					success: function(data){
-						if(data.username){
-							console.log("LocalStorage login");
+						if (data.username){
+							localStorage['username'] = data.username;
+							localStorage['password'] = data.password;
+							localStorage['city'] = data.city;
+							localStorage['state'] = data.state;
+							localStorage['country'] = data.country;
+							console.log("login successful");
 							goToHomePage();
 						} else {
-							console.log("Cannot find user");
 							localStorage.clear();
 						}
 					},
 					error: function(){
-						console.log("Cannot find user");
 						localStorage.clear();
 					}
 				});
