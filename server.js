@@ -36,15 +36,28 @@ app.post('/users', function(req,res){
 	var country = postBody.country;
 
 	if(!username | !password | !city | !state | !country){
-		res.send('ERROR');
+		res.send('BLANK');
 		return; //return early
 	}
 
-	var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?)");
-	stmt.run(username,password,city,state,country);
-	stmt.finalize();
-	res.send('OK');
-	
+	db.get('SELECT * FROM peeps WHERE username=?', [username], function(err,rows){
+		if(err){
+			res.send('ERROR');
+			return;
+		} else {
+			if(rows == undefined){
+				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?)");
+				stmt.run(username,password,city,state,country);
+				stmt.finalize();
+				res.send('OK');
+				return;
+			} else {
+				res.send('TAKEN');
+				return;
+			}
+		}
+	});
+	return;	
 });
 
 //user get request
