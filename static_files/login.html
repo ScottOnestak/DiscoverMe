@@ -5,25 +5,21 @@
 
 		<style type="text/css">
 			h1{
-				font-size: 50px;
+				font-size: 25px;
+
 				font-family: sans-serif;
-				color: white;
-				text-shadow: 2px 2px 0px #FF00FF
+				color: #336699;
 			}
 			h2{
-				color: white;
-				text-shadow: 1px 1px 0px #00FF00
+				color: #336699;
 			}
-			body{
-				background-color: black;
+			html{
+				background: url(compass.jpg) no-repeat;
+				background-style: ;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover; 
-			}
-			h3{
-				color: white;
-				text-shadow: 1px 1px 0px #FFFF00
 			}
 			a{
 				color:white;
@@ -42,11 +38,17 @@
 		<script type="text/javascript">
 
 		$(document).ready(function(){
-			$("#person").append("username:  " + localStorage.getItem('username'));
-			$("#location").append("location:  " + localStorage.getItem('city') + ", " + localStorage.getItem('state') + ", " + localStorage.getItem('country'));
+			/*$("#person").append("username:  " + localStorage.getItem('username'));*/
+			$("#location").append("Home Location:  " + localStorage.getItem('city') + ", " + localStorage.getItem('state') + ", " + localStorage.getItem('country'));
+			/*this is where we would implement the future destinations based off of the quiz results. We would set the values into a list and separate them by commas. Or we could just have a for loop here iterating through the list and we could add a comma between each iteration. Probably the second option would be easiest. Just throwing this in here now although the quiz is not fully made yet. 
+			/*$("#destlocation").append("Desired Destinations: "+localStorage.getItem('destinations'))*/
+			$("#person").append(localStorage.getItem('username'));
 			$('#logout').click(function(){
 				localStorage.clear();
 				window.location = 'http://localhost:3000/test.html';
+			});
+			$('#quiz').click(function(){
+				window.location='http://localhost:3000/quiz.html';
 			});
 		});
 
@@ -56,11 +58,12 @@
 
 	<body>
 
-		<h1>"You have successfully logged in!"</h1>
-		<h2><div id = "person"></div></h2>
+		<h1 align="center">Hello</h1>
+		<h2><div align="center" id = "person"></div></h2>
 		<h2><div id = "location"></div></h2>
-		<img align="center" src="smile.gif" style="width: 500px;"/>
-		<button id = "logout">Logout</button>
+		<!--<img align="center" src="smile.gif" style="width: 500px;"/>!-->
+		<button style="float: right" id = "logout">Logout</button>
+		<button style="float: center" id="quiz">Quiz</button>
 		
 	</body>
 </html>
