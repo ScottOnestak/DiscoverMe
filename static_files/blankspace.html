@@ -47,6 +47,10 @@
 			window.location = 'http://localhost:3000/login.html';
 		}
 
+		function goToTakenUsername(){
+			window.location = 'http://localhost:3000/takenUsername.html';
+		}
+
 		$(document).ready(function(){
 			//ajax error function
 			$(document).ajaxError(function() {
@@ -72,7 +76,7 @@
 
   			if(localStorage.getItem('Tempcity')){
   				$('#city').val(function(index, val){
-  					return val + localStorage.getItem('Temppassword');
+  					return val + localStorage.getItem('Tempcity');
   				});
   			}else {
 				$("#city").css("background-color", "#993333");
@@ -116,7 +120,7 @@
 							localStorage['state'] = $("#state").val();
 							localStorage['country'] = $("#country").val();
 							goToHomePage();
-						} else {
+						} else if(data == 'BLANK') {
 							if($("#username").val() !== ""){
 								localStorage['Tempusername'] = $("#username").val();
 								$("#username").css("background-color", "white");
@@ -156,6 +160,26 @@
 								localStorage.removeItem('Tempcountry');
 								$("#country").css("background-color", "#993333");
 							}	
+
+						} else if (data == 'TAKEN'){
+							console.log('Taken');
+							if($("#username").val() !== ""){
+								localStorage['Tempusername'] = $("#username").val();
+							}
+							if($('#password').val() !== ""){
+								localStorage['Temppassword'] = $("#password").val();
+							}		
+							if($('#city').val() !== ""){
+								localStorage['Tempcity'] = $("#city").val();
+							}	
+							if($('#state').val() !== ""){
+								localStorage['Tempstate'] = $("#state").val();
+							}	
+							if($('#country').val() !== ""){
+								localStorage['Tempcountry'] = $("#country").val();
+							}	
+							goToTakenUsername();
+						} else {
 
 						}
 					},
