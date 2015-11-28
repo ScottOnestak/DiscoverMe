@@ -48,6 +48,10 @@
 			window.location = 'http://localhost:3000/blankspace.html';
 		}
 
+		function goToErrorPage(){
+			window.location = 'http://localhost:3000/error.html';
+		}
+
 		$(document).ready(function(){
 			//ajax error function
 			$(document).ajaxError(function() {
@@ -143,11 +147,13 @@
 							}	
 						} else {
 							console.log('Error');
+							goToErrorPage();
 						}
 					},
 					error: function(){
 						console.log("You have encountered an error");
 						localStorage.clear();
+						goToErrorPage();
 					}
 				});
 			});

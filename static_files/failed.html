@@ -42,7 +42,6 @@
 				text-shadow: 1px 1px 0px #0d0d0d;
 			}
 			#hello{
-
 				color:#ffff80;
 				font-family: sans-serif;
 				font-size: 25px;
@@ -59,7 +58,9 @@
 			window.location = 'http://localhost:3000/login.html';
 		}
 
-
+		function goToErrorPage(){
+			window.location = 'http://localhost:3000/error.html';
+		}
 
 		$(document).ready(function(){
 			//ajax error function
@@ -107,15 +108,13 @@
 							localStorage['failedPassword'] = data.failedPassword;
 							goToFailedLogin();
 						} else {
-							console.log("Houston, we've got a problem!");
+							goToErrorPage();
 						}
 					},
 					error: function() {
 						console.log("Error");
 						localStorage.clear();
-						localStorage['failedUsername'] = $('username').val();
-						localStorage['failedPassword'] = $('password').val();
-						goToFailedLogin();
+						goToErrorPage();
 					},
 				});
 			});

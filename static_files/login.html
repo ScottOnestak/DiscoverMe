@@ -48,6 +48,14 @@
 			$('#quiz').click(function(){
 				window.location='http://localhost:3000/quiz.html';
 			});
+
+			$('#update').click(function(){
+				window.location='http://localhost:3000/update.html';
+			});
+
+			$('#delete').click(function(){
+				window.location='http://localhost:3000/delete.html';
+			})
 		});
 		</script>
 
@@ -60,7 +68,9 @@
 		<h2><div id = "location"></div></h2>
 		<!--<img align="center" src="smile.gif" style="width: 500px;"/>!-->
 		<button style="float: right" id = "logout">Logout</button>
-		<button style="float: center" id="quiz">Quiz</button>
+		<button style="float: center" id="quiz">Quiz</button></br>
+		<button style="float: left" id="update">Update Account</button></br>
+		<button style="float: left" id="delete">Delete Account</button></br>
 		
 	</body>
 </html>
