@@ -2,6 +2,7 @@
 //front end currently localhost/test.html
 //used the code from lectures 11 and 12 to implement the REST API
 //implementation of sqlite3 learned and taken from here https://github.com/mapbox/node-sqlite3
+//source: http://dalelane.co.uk/blog/?p=3152
 
 var express = require('express');
 var app = express();
@@ -84,12 +85,77 @@ app.get('/users/*/*', function(req,res){
 	return;
 });
 
+app.put('/users/*/*', function(req,res){
+	var postBody = req.body;
+	var password = postBody.password;
+	var city = postBody.city;
+	var state = postBody.state;
+	var country = postBody.country;
+
+	if(!password | !city | !state | !country){
+		res.send('BLANK');
+		return; //return early
+	}
+
+	db.get('SELECT * FROM peeps WHERE username=?', req.params[0], function(err,rows){
+		if(err){
+			res.send("ERROR");
+			return;
+		} else {
+			console.log(rows);
+			if(rows == undefined){
+				res.send("IncorrectInfo");
+				return;
+			}
+			if(rows.password == req.params[1]){
+				db.run('UPDATE peeps SET password = ?, city = ?, state = ?, country = ? WHERE username = ?', [password,city,state,country,req.params[0]], function(err,rows){
+					if(err){
+						res.send("ERROR");
+						return;
+					} else {
+						res.send("OK");
+						return;
+					}
+				});	
+			} else {
+				res.send("IncorrectInfo");
+				return;
+			}	
+		}
+	});
+	return;
+
+});
+
 //user delete request
 app.delete('/users/*/*', function(req,res){
-	var usernameLookup = req.params[0];
-	var pass = req.params[1];
-	db.delete('DELETE * FROM peeps where username == usernameLookup AND password == pass');
-	res.send('OK');
+	db.get('SELECT * FROM peeps WHERE username=?', req.params[0], function(err,rows){
+		if(err){
+			res.send("ERROR");
+			return;
+		} else {
+			console.log(rows);
+			if(rows == undefined){
+				res.send("IncorrectInfo");
+				return;
+			}
+			if(rows.password == req.params[1]){
+				db.run('DELETE FROM peeps WHERE username = ?', req.params[0], function(err,rows){
+					if(err){
+						res.send("ERROR");
+						return;
+					} else {
+						res.send("OK");
+						return;
+					}
+				});	
+			} else {
+				res.send("IncorrectInfo");
+				return;
+			}	
+		}
+	});
+	return;
 });
 
 
