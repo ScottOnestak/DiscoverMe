@@ -1,8 +1,8 @@
 //The server for the project
-//front end currently localhost/test.html
-//used the code from lectures 11 and 12 to implement the REST API
-//implementation of sqlite3 learned and taken from here https://github.com/mapbox/node-sqlite3
+//source: lectures 11 and 12 to implement the REST API
+//source: https://github.com/mapbox/node-sqlite3
 //source: http://dalelane.co.uk/blog/?p=3152
+//source: http://stackoverflow.com/questions/1748794/is-there-an-arraylist-in-javascript
 
 var express = require('express');
 var app = express();
@@ -10,8 +10,8 @@ var http = require('http').Server(app);
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('theDatabase.db');
 
-db.run("CREATE TABLE IF NOT EXISTS peeps (username varchar(20) PRIMARY KEY, password varchar(20), city varchar(20), state varchar(20), country varchar(20))");
-db.run("CREATE TABLE IF NOT EXISTS locate (name varchar(20) PRIMARY KEY, type varchar(20), city varchar(20), country varchar(20))");
+db.run("CREATE TABLE IF NOT EXISTS peeps (username varchar(20) PRIMARY KEY, password varchar(20), city varchar(20), state varchar(20), country varchar(20), places TEXT)");
+db.run("CREATE TABLE IF NOT EXISTS locate (name varchar(50), type varchar(20), city varchar(20), state varchar(20), country varchar(20), count INTEGER)");
 
 
 //reqired to support parsing of POST request bodies
@@ -47,8 +47,10 @@ app.post('/users', function(req,res){
 			return;
 		} else {
 			if(rows == undefined){
-				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?)");
-				stmt.run(username,password,city,state,country);
+				var thePlaces = [];
+				var places = JSON.stringify(thePlaces);
+				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?,?)");
+				stmt.run(username,password,city,state,country,places);
 				stmt.finalize();
 				res.send('OK');
 				return;
@@ -153,6 +155,108 @@ app.delete('/users/*/*', function(req,res){
 				res.send("IncorrectInfo");
 				return;
 			}	
+		}
+	});
+	return;
+});
+
+app.post('/places/*/*', function(req,res){
+	var postBody = req.body;
+	var name = postBody.name;
+	var type = postBody.type;
+	var city = postBody.city;
+	var state = postBody.state;
+	var country = postBody.country;
+
+	console.log(name + " " + type + " " + city + " " + state + " " + country);
+
+	if(!name | !type | !city | !state | !country){
+		res.send({status:'BLANK'});
+		return;
+	}
+
+	db.get('SELECT * from locate WHERE name=? AND city=? AND state=? AND country=?', [name,city,state,country], function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			//create current count to update the popularity of a location
+			var currentCount;
+			if(rows == undefined){
+				//insert into locate table
+				var currentCount = 0;
+				var stmt = db.prepare("INSERT into locate VALUES (?,?,?,?,?,?)");
+				stmt.run(name,type,city,state,country,count);
+				stmt.finalize();
+			} else {
+				currentCount = rows.count;
+			}
+
+			//increment the current count and update the object with the new count
+			currentCount++;
+			
+			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
+				if(err){
+					res.send("ERROR");
+						return;
+					} 
+			});	
+
+			//insert the reference to the locate in the peeps
+			db.get('SELECT * from peeps WHERE username=?', req.params[0],function(err,row){
+				if(err){
+					res.send({status:'MADE ERROR'});
+					return;
+				} else {
+					if(row == undefined){
+						res.send('IncorrectInfo');
+						return;
+					}
+					
+					var thePlaces = JSON.parse(row.places);
+					thePlaces.push({"name": name,
+								    "city": city,
+									"state": state,
+									"country": country});
+
+					var add = JSON.stringify(thePlaces);
+
+					//console.log(add);
+
+					if(row.password == req.params[1]){
+						db.run('UPDATE peeps SET places=? WHERE username=?', [add,req.params[0]], function(err,rows){
+							if(err){
+								res.send({status:'ERROR'});
+								return;
+							} else {
+								db.get('SELECT * FROM peeps WHERE username=?', req.params[0], function(err,rows){
+									if(err){
+										res.send({status:'MADE ERROR'});
+										return;
+									} else {
+										console.log(rows);
+										if(rows == undefined){
+											res.send({status: 'MADE ERROR'});
+											return;
+										}
+										if(rows.password == req.params[1]){
+											console.log(rows);
+											res.send(rows);
+											return;	
+										} else {
+											res.send({status: 'MADE ERROR'});
+											return;
+										}
+									}
+								}); 
+							}
+						});
+					} else {
+						res.send({status: 'ERROR'});
+						return;
+					}
+				}
+			});
 		}
 	});
 	return;
