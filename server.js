@@ -120,7 +120,7 @@ app.put('/users/*/*', function(req,res){
 					}
 				});	
 			} else {
-				res.send("IncorrectInfo");
+				res.send({status: 'ERROR');
 				return;
 			}	
 		}
