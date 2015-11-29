@@ -197,7 +197,7 @@ app.post('/places/*/*', function(req,res){
 			
 			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
 				if(err){
-					res.send("ERROR");
+					res.send({status: 'ERROR'});
 						return;
 					} 
 			});	
