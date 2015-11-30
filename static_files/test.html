@@ -117,7 +117,7 @@
 							localStorage['failedPassword'] = data.failedPassword;
 							goToFailedLogin();
 						} else {
-							console.log("Houston, we've got a problem!");
+							goToFailedLogin();
 						}
 					},
 					error: function() {

@@ -7,7 +7,7 @@ body{
 	color: #FFFFFF;
 }
 </style>
-<body position="center">
+	<body position="center">
 	<p class="question">1. Which view would you like to wake up to?</p>
 <ul class="answers">
 <input type="image" name="q1" value="a" id="Madrid" src="mmorning.jpg"style="width:200px;height:190px;"><label for="q1a"></label><br/>
@@ -77,5 +77,42 @@ body{
 <input type="image" name="q10" value="b" id="Dublin"src="doutdoors.jpg"style="width:200px;height:190px;"><label for="q10b"></label><br/>
 <input type="image" name="q10" value="c" id="Rio"src="routdoors.jpg"style="width:200px;height:190px;"><label for="q10c"></label><br/>
 <input type="image" name="q10" value="d" id="Sydney"src="soutdoors.jpg"style="width:200px;height:190px;"><label for="q0d"><label><br/>
+<p11 class="submit">Click submit to find your country!</p11>
+<button type="submit" onclick="calculate()">Submit</button>
+<!--formaction="quizresult.html"!-->
 	</body>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript">
+
+	function goToMadrid(){
+		window.location("http://localhost:3000/madrid.html");
+	}
+	function goToDublin(){
+		window.location("http://localhost:3000/dublin.html");
+	}
+	function goToRio(){
+		window.location("http://localhost:3000/rio.html");
+	}
+	function goToSydney(){
+		window.location("http://localhost:3000/sydney.html");
+	}
+	function calculate(){
+		var madrid=document.getElementById("Madrid").value;
+		console.log(madrid);
+		var dublin=document.getElementById("Dublin").value;
+		var rio=document.getElementById("Rio").value;
+		var sydney=document.getElementById("Sydney").value;
+		if(madrid>=3){
+			goToMadrid();
+		}else if(dublin>=3){
+			goToDublin();
+		}else if(rio>=3){
+			goToRio();
+		}else if(sydney>=3){
+			goToSydney();
+		}else{
+			console.log("failure");
+		}
+}
+	</script>
 <html>

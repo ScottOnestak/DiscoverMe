@@ -39,6 +39,15 @@
 			window.location = 'http://localhost:3000/blankspace.html';
 		}
 
+		function goToTakenUsername(){
+			window.location = 'http://localhost:3000/takenUsername.html';
+		}
+
+		function goToErrorPage(){
+			window.location = 'http://localhost:3000/error.html';
+		}
+
+
 		$(document).ready(function(){
 			//ajax error function
 			$(document).ajaxError(function() {
@@ -70,8 +79,12 @@
 							localStorage['state'] = $("#state").val();
 							localStorage['country'] = $("#country").val();
 							goToHomePage();
+<<<<<<< HEAD
 						} 
 						else {
+=======
+						} else if(data == 'BLANK') {
+>>>>>>> origin/master
 							console.log("blank space")
 							if($("#username").val() !== ""){
 								localStorage['Tempusername'] = $("#username").val();
@@ -89,11 +102,33 @@
 								localStorage['Tempcountry'] = $("#country").val();
 							}	
 							goToBlankSpace();
+						} else if(data == 'TAKEN'){
+							console.log('Taken');
+							if($("#username").val() !== ""){
+								localStorage['Tempusername'] = $("#username").val();
+							}
+							if($('#password').val() !== ""){
+								localStorage['Temppassword'] = $("#password").val();
+							}		
+							if($('#city').val() !== ""){
+								localStorage['Tempcity'] = $("#city").val();
+							}	
+							if($('#state').val() !== ""){
+								localStorage['Tempstate'] = $("#state").val();
+							}	
+							if($('#country').val() !== ""){
+								localStorage['Tempcountry'] = $("#country").val();
+							}	
+							goToTakenUsername();
+						} else {
+							console.log('Error');
+							goToErrorPage();
 						}
 					},
 					error: function(){
 						console.log("You have encountered an error");
 						localStorage.clear();
+						goToErrorPage();
 					}
 				});
 			});

@@ -6,7 +6,6 @@
 		<style type="text/css">
 			h1{
 				font-size: 25px;
-
 				font-family: sans-serif;
 				color: #336699;
 			}
@@ -36,7 +35,6 @@
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript">
-
 		$(document).ready(function(){
 			/*$("#person").append("username:  " + localStorage.getItem('username'));*/
 			$("#location").append("Home Location:  " + localStorage.getItem('city') + ", " + localStorage.getItem('state') + ", " + localStorage.getItem('country'));
@@ -50,8 +48,15 @@
 			$('#quiz').click(function(){
 				window.location='http://localhost:3000/quiz.html';
 			});
-		});
 
+			$('#update').click(function(){
+				window.location='http://localhost:3000/update.html';
+			});
+
+			$('#delete').click(function(){
+				window.location='http://localhost:3000/delete.html';
+			})
+		});
 		</script>
 
 	</head>
@@ -63,7 +68,9 @@
 		<h2><div id = "location"></div></h2>
 		<!--<img align="center" src="smile.gif" style="width: 500px;"/>!-->
 		<button style="float: right" id = "logout">Logout</button>
-		<button style="float: center" id="quiz">Quiz</button>
+		<button style="float: center" id="quiz">Quiz</button></br>
+		<button style="float: left" id="update">Update Account</button></br>
+		<button style="float: left" id="delete">Delete Account</button></br>
 		
 	</body>
 </html>
