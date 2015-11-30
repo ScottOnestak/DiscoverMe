@@ -10,7 +10,7 @@ var http = require('http').Server(app);
 var sqlite3 = require("sqlite3").verbose();
 var db = new sqlite3.Database('theDatabase.db');
 
-db.run("CREATE TABLE IF NOT EXISTS peeps (username varchar(20) PRIMARY KEY, password varchar(20), city varchar(20), state varchar(20), country varchar(20), places TEXT)");
+db.run("CREATE TABLE IF NOT EXISTS peeps (username varchar(20) PRIMARY KEY, password varchar(20), city varchar(20), state varchar(20), country varchar(20), places TEXT, completed TEXT)");
 db.run("CREATE TABLE IF NOT EXISTS locate (name varchar(50), type varchar(20), city varchar(20), state varchar(20), country varchar(20), count INTEGER)");
 
 
@@ -49,8 +49,10 @@ app.post('/users', function(req,res){
 			if(rows == undefined){
 				var thePlaces = [];
 				var places = JSON.stringify(thePlaces);
-				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?,?)");
-				stmt.run(username,password,city,state,country,places);
+				var theCompletes = [];
+				var completed = JSON.stringify(theCompletes)
+				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?,?,?)");
+				stmt.run(username,password,city,state,country,places,completed);
 				stmt.finalize();
 				res.send('OK');
 				return;
@@ -184,24 +186,21 @@ app.post('/places/*/*', function(req,res){
 			var currentCount;
 			if(rows == undefined){
 				//insert into locate table
-				var currentCount = 0;
+				var currentCount = 1;
 				var stmt = db.prepare("INSERT into locate VALUES (?,?,?,?,?,?)");
-				stmt.run(name,type,city,state,country,count);
+				stmt.run(name,type,city,state,country,currentCount);
 				stmt.finalize();
 			} else {
-				currentCount = rows.count;
-			}
-
-			//increment the current count and update the object with the new count
-			currentCount++;
-			
-			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
-				if(err){
-					res.send("ERROR");
+				currentCount = rows.count +1;
+				db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
+					if(err){
+						res.send({status: 'ERROR'});
 						return;
 					} 
-			});	
-
+				});	
+			}
+			
+			
 			//insert the reference to the locate in the peeps
 			db.get('SELECT * from peeps WHERE username=?', req.params[0],function(err,row){
 				if(err){
@@ -209,12 +208,13 @@ app.post('/places/*/*', function(req,res){
 					return;
 				} else {
 					if(row == undefined){
-						res.send('IncorrectInfo');
+						res.send({status: 'ERROR'});
 						return;
 					}
 					
 					var thePlaces = JSON.parse(row.places);
 					thePlaces.push({"name": name,
+									"type": type,
 								    "city": city,
 									"state": state,
 									"country": country});
@@ -262,6 +262,173 @@ app.post('/places/*/*', function(req,res){
 	return;
 });
 
+app.put('/complete/*/*', function(req,res){
+	var postBody = req.body;
+	var name = postBody.name;
+	var type = postBody.type;
+	var city = postBody.city;
+	var state = postBody.state;
+	var country = postBody.country;
+
+	console.log("Passed parameters: " + name + " " + type + " " + city + " " + state + " " + country);
+
+	db.get('SELECT * from peeps WHERE username=?', req.params[0], function(err,rows){
+		if(err){
+			console.log('first error');
+			res.send({status: "ERROR"});
+			return;
+		} else {
+			console.log(rows);
+			if(rows == undefined){
+				console.log('rows undefined');
+				res.send({status: "IncorrectInfo"});
+				return;
+			}
+			if(rows.password == req.params[1]){
+				var theArray = JSON.parse(rows.places);
+
+				console.log(theArray.length);
+
+				var newArray = [];
+
+				for(var i = 0; i < theArray.length; i++){
+					console.log("checking: " + theArray[i].name);
+					if(theArray[i].name == name & theArray[i].city == city & theArray[i].state == state & theArray[i].country == country){
+						console.log("Splicing: " + theArray[i].name);
+						theArray.splice(i,1);
+					}
+				}
+
+				var returnArray = JSON.stringify(theArray);
+
+				console.log("returnArray");
+				console.log(returnArray);
+
+				var completed = JSON.parse(rows.completed);
+
+				completed.push({"name": name,
+								"type": type,
+								"city": city,
+								"state": state,
+								"country": country});
+
+				var newComplete = JSON.stringify(completed);
+
+				console.log(newComplete);
+
+
+				db.run('UPDATE peeps SET places=?, completed=? WHERE username=?', [returnArray,newComplete,req.params[0]], function(err,rows){
+					if(err){
+						console.log('update error');
+						res.send({status:'ERROR'});
+						return;
+					} else {
+						db.get('SELECT * FROM peeps WHERE username=?', req.params[0], function(err,rows){
+							if(err){
+								res.send({status:'ERROR'});
+								return;
+							} else {
+								console.log(rows);
+								if(rows == undefined){
+									res.send({status: 'ERROR'});
+									return;
+								}
+								if(rows.password == req.params[1]){
+									console.log(rows);
+									res.send(rows);
+									return;	
+								} else {
+									res.send({status: 'ERROR'});
+									return;
+								}
+							}
+						}); 
+					}
+				});
+			} else {
+				console.log('incorrect password');
+				res.send({status: "IncorrectInfo"});
+				return;
+			}	
+		}
+	});
+});
+
+
+app.put('/remove/*/*', function(req,res){
+	var postBody = req.body;
+	var name = postBody.name;
+	var type = postBody.type;
+	var city = postBody.city;
+	var state = postBody.state;
+	var country = postBody.country;
+
+	db.get('SELECT * from peeps WHERE username=?', req.params[0], function(err,rows){
+		if(err){
+			res.send({status: "ERROR"});
+			return;
+		} else {
+			console.log(rows);
+			if(rows == undefined){
+				res.send({status: "IncorrectInfo"});
+				return;
+			}
+			if(rows.password == req.params[1]){
+				var theArray = JSON.parse(rows.places);
+
+				console.log(theArray.length);
+
+				var newArray = [];
+
+				for(var i = 0; i < theArray.length; i++){
+					console.log("checking: " + theArray[i].name);
+					if(theArray[i].name == name & theArray[i].city == city & theArray[i].state == state & theArray[i].country == country){
+						console.log("Splicing: " + theArray[i].name);
+						theArray.splice(i,1);
+					}
+				}
+
+				var returnArray = JSON.stringify(theArray);
+
+				console.log("returnArray");
+				console.log(returnArray);
+
+
+				db.run('UPDATE peeps SET places=? WHERE username=?', [returnArray,req.params[0]], function(err,rows){
+					if(err){
+						res.send({status:'ERROR'});
+						return;
+					} else {
+						db.get('SELECT * FROM peeps WHERE username=?', req.params[0], function(err,rows){
+							if(err){
+								res.send({status:'ERROR'});
+								return;
+							} else {
+								console.log(rows);
+								if(rows == undefined){
+									res.send({status: 'ERROR'});
+									return;
+								}
+								if(rows.password == req.params[1]){
+									console.log(rows);
+									res.send(rows);
+									return;	
+								} else {
+									res.send({status: 'ERROR'});
+									return;
+								}
+							}
+						}); 
+					}
+				});
+			} else {
+				res.send({status: "IncorrectInfo"});
+				return;
+			}	
+		}
+	});
+	return;
+});
 
 // start the server on http://localhost:3000/
 var server = app.listen(3000, function () {
