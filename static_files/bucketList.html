@@ -17,8 +17,8 @@
 			h1{
 				font-size: 70px;
 				font-family: Papyrus, fantasy;
-				font-style:bold;
-				color: #336699;
+				font-weight:bold;
+				color: #000000;
 			}
 			h2{
 				color: #336699;
@@ -31,14 +31,16 @@
 				background-size: cover; 
 			}
 			a{
-				color:white;
+				font-size:17px;
+				color:black;
 				font-style: italic;
-				text-shadow: 1px 1px 0px #FF14C4
+				text-shadow: 1px 1px 0px white;
 			}
 			a:hover{
-				color:lime;
+				font-size:17px;
+				color:blue;
 				font-style: normal;
-				text-shadow: 1px 1px 0px #FF00FF
+				text-shadow: 1px 1px 0px white;
 			}
 			.myButtons{
 				color: black;
@@ -69,6 +71,12 @@
 			.ui-dialog-content {
     			opacity: 100;
 			}
+			#message{
+				font-size: 30px;
+				font-family: Papyrus, fantasy;
+				font-weight:bold;
+				color: #cc0000;
+			}
 			
 		</style>
 
@@ -87,7 +95,7 @@
 				$('#bucket').append(" for " + localStorage.getItem('username'));
 			}
 
-			if(localStorage.getItem('places')){
+			if(localStorage.getItem('places') != "[]"){
 				document.body.appendChild(document.createElement("BR"));
 				document.body.appendChild(document.createElement("BR"));
 				document.body.appendChild(document.createElement("BR"));
@@ -130,6 +138,7 @@
 			
 			function myFunction(){
 				var theInformation = this.id;
+				var useless = "false";
 				var color;
 
 				$("#dialog-confirm").html("<br><br>Do you wish to check off " + theInformation.name + " from your bucket list or remove it?");
@@ -152,8 +161,10 @@
         			}
     			});
 				
-				this.style.backgroundColor = "#ffb3b3";
+				this.style.backgroundColor = "#d9d9d9";
 				this.setAttribute("disabled","disabled");
+
+				
 
 			}
 
@@ -226,8 +237,8 @@
 	<body>
 
 		<h1 align="center" id="bucket">Bucket List</h1>
-		<div align="center" id="message"></div>
-		<p style="position: absolute; top:20px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
+		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
+		<p style="position: absolute; top:180px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
 		<div id="dialog-confirm"></div>
 		
 	</body>
