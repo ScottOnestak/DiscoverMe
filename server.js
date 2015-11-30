@@ -122,7 +122,7 @@ app.put('/users/*/*', function(req,res){
 					}
 				});	
 			} else {
-				res.send("IncorrectInfo");
+				res.send({status: 'ERROR');
 				return;
 			}	
 		}
@@ -191,10 +191,22 @@ app.post('/places/*/*', function(req,res){
 				stmt.run(name,type,city,state,country,currentCount);
 				stmt.finalize();
 			} else {
+<<<<<<< HEAD
 				currentCount = rows.count +1;
 				db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
 					if(err){
 						res.send({status: 'ERROR'});
+=======
+				currentCount = rows.count;
+			}
+
+			//increment the current count and update the object with the new count
+			currentCount++;
+			
+			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
+				if(err){
+					res.send({status: 'ERROR'});
+>>>>>>> origin/master
 						return;
 					} 
 				});	
