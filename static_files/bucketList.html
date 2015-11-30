@@ -1,0 +1,245 @@
+<!-- source: http://www.w3schools.com/jsref/met_document_createelement.asp
+	 source: http://stackoverflow.com/questions/1819878/changing-button-color-programatically
+	 source: http://www.cssfontstack.com/Papyrus
+	 source: http://stackoverflow.com/questions/19848148/how-can-you-change-form-button-appearance
+	 source: http://stackoverflow.com/questions/13199225/use-javascript-jquery-to-dynamically-create-multiple-html-buttons-with-differe
+	 source: http://stackoverflow.com/questions/18648500/add-id-class-to-objects-from-createelement-method
+	 source: http://stackoverflow.com/questions/9389952/how-to-change-background-color-of-jquery-ui-dialog
+	 source: http://stackoverflow.com/questions/14850153/jquery-ui-dialog-work-with-the-background-only-opacity-without-graying-the-fon
+	 source: http://jsfiddle.net/taditdash/vvjj8/
+
+-->
+
+<html>
+	<head>
+
+		<style type="text/css">
+			h1{
+				font-size: 70px;
+				font-family: Papyrus, fantasy;
+				font-weight:bold;
+				color: #000000;
+			}
+			h2{
+				color: #336699;
+			}
+			html{
+				background: url(paper.jpg) no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover; 
+			}
+			a{
+				font-size:17px;
+				color:black;
+				font-style: italic;
+				text-shadow: 1px 1px 0px white;
+			}
+			a:hover{
+				font-size:17px;
+				color:blue;
+				font-style: normal;
+				text-shadow: 1px 1px 0px white;
+			}
+			.myButtons{
+				color: black;
+				background-color: #ffe5e5;
+    			width: 30em;
+    			height: 5em;
+    			border-radius: 10px;
+			}
+			.myButtons:hover{
+				background-color: #ff1a1a;
+			}
+			.dialog {
+    			--box-shadow-color: palegoldenrod;
+    			box-shadow: 5px 5px 5px rgb(0,0,25);
+    			background-color: rgb(0,0,0);
+			}
+			.dialogm .ui-dialog-titlebar {
+   				background-color: rgb(225, 0, 0);
+    			color: black;
+			}
+			.ui-dialog {
+   			border: 3px solid rgb(0, 0, 0);
+    		color: rgb(0,0,0);
+    		background-color: rgb(225,225,225);
+    		font: 18px/120% Arial, Helvetica, sans-serif;
+    		opacity: 100;
+			}
+			.ui-dialog-content {
+    			opacity: 100;
+			}
+			#message{
+				font-size: 30px;
+				font-family: Papyrus, fantasy;
+				font-weight:bold;
+				color: #cc0000;
+			}
+			
+		</style>
+
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+		<script type="text/javascript">
+
+		function goToErrorPage(){
+			window.location = 'http://localhost:3000/error.html';
+		}
+
+
+		$(document).ready(function(){
+
+			if(localStorage.getItem('username')){
+				$('#bucket').append(" for " + localStorage.getItem('username'));
+			}
+
+			if(localStorage.getItem('places') != "[]"){
+				document.body.appendChild(document.createElement("BR"));
+				document.body.appendChild(document.createElement("BR"));
+				document.body.appendChild(document.createElement("BR"));
+				var buttons = [];
+				var locations = JSON.parse(localStorage.getItem('places'));
+				for(var i = 0; i < locations.length; i++){
+					buttons[i] = document.createElement("BUTTON");
+					var name = document.createTextNode(locations[i].name);
+					var lineBreak1 = document.createElement("BR");
+					var lineBreak2 = document.createElement("BR");
+					var city = document.createTextNode(locations[i].city);
+					var state = document.createTextNode(locations[i].state);
+					var country = document.createTextNode(locations[i].country);
+					var comma1 = document.createTextNode(", ");
+					var comma2 = document.createTextNode(", ");
+					var type = document.createTextNode(locations[i].type);
+					buttons[i].setAttribute("id", JSON.stringify(locations[i]));
+					buttons[i].setAttribute("class", "myButtons");
+					buttons[i].setAttribute("width", "400px");
+					console.log(buttons[i].getAttribute('id'));
+					buttons[i].style.textAlign = 'left';
+					buttons[i].style.fontSize = '15px';
+					buttons[i].appendChild(name);
+					buttons[i].appendChild(lineBreak1);
+					buttons[i].appendChild(city);
+					buttons[i].appendChild(comma1);
+					buttons[i].appendChild(state);
+					buttons[i].appendChild(comma2);
+					buttons[i].appendChild(country);
+					buttons[i].appendChild(lineBreak2);
+					buttons[i].appendChild(type);
+					buttons[i].addEventListener('click', myFunction);					
+					document.body.appendChild(buttons[i]);
+					document.body.appendChild(document.createElement("BR"));
+					document.body.appendChild(document.createElement("BR"));
+				}
+			} else {
+				$('#message').text("You have no places or events to display at this time.");
+			}
+			
+			function myFunction(){
+				var theInformation = this.id;
+				var useless = "false";
+				var color;
+
+				$("#dialog-confirm").html("<br><br>Do you wish to check off " + theInformation.name + " from your bucket list or remove it?");
+
+				$("#dialog-confirm").dialog({
+       				resizable: false,
+      				modal: true,
+     				title: "~~~~~Please Confirm Your Request~~~~~",
+     				height: 250,
+        			width: 400,
+        			buttons: {
+            			"Check Off": function () {
+                			$(this).dialog('close');
+                			callback(true, theInformation);
+            			},
+                		"Remove": function () {
+                			$(this).dialog('close');
+                			callback(false, theInformation);
+            			}
+        			}
+    			});
+				
+				this.style.backgroundColor = "#d9d9d9";
+				this.setAttribute("disabled","disabled");
+
+				
+
+			}
+
+			function callback(value, theInformation){
+				var info = JSON.parse(theInformation);
+
+				console.log(info.name);
+				console.log(localStorage.getItem('username'));
+
+				$(document).ajaxError(function() {
+    				alert("Sorry, there was a problem!");
+  				});
+				if(value){
+					$.ajax({
+						url: "complete/" + localStorage.getItem('username') + "/" + localStorage.getItem('password'),
+						type: "PUT",
+						dataType: "json",
+						data: { name: info.name,
+								type: info.type,
+								city: info.city,
+								state: info.state,
+								country: info.country},
+						success: function(data){
+							console.log(data);
+							if(data.username){
+								localStorage['places'] = data.places;
+								localStorage['completed'] = data.completed;
+							} else if(data.status){
+								//goToErrorPage();
+							} else {
+								//goToErrorPage();
+							}
+						},
+						error: function(){
+							//goToErrorPage();
+						}
+					});
+				} else {
+					$.ajax({
+						url: "remove/" + localStorage.getItem('username') + "/" + localStorage.getItem('password'),
+						type: "PUT",
+						dataType: "json",
+						data: { name: info.name,
+								type: info.type,
+								city: info.city,
+								state: info.state,
+								country: info.country},
+						success: function(data){
+							console.log(data);
+							if(data.username){
+								localStorage['places'] = data.places;
+							} else if(data.status){
+								goToErrorPage();
+							} else {
+								goToErrorPage();
+							}
+						},
+						error: function(){
+							goToErrorPage();
+						}
+					});
+				}
+			}
+		});
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<h1 align="center" id="bucket">Bucket List</h1>
+		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
+		<p style="position: absolute; top:180px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
+		<div id="dialog-confirm"></div>
+		
+	</body>
+</html>
