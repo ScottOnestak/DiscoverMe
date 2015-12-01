@@ -1,15 +1,8 @@
 //The server for the project
-<<<<<<< HEAD
-//front end currently localhost/test.html
-//used the code from lectures 11 and 12 to implement the REST API
-//implementation of sqlite3 learned and taken from here https://github.com/mapbox/node-sqlite3
-//source: http://dalelane.co.uk/blog/?p=3152
-=======
 //source: lectures 11 and 12 to implement the REST API
 //source: https://github.com/mapbox/node-sqlite3
 //source: http://dalelane.co.uk/blog/?p=3152
 //source: http://stackoverflow.com/questions/1748794/is-there-an-arraylist-in-javascript
->>>>>>> origin/master
 
 var express = require('express');
 var app = express();
@@ -54,17 +47,12 @@ app.post('/users', function(req,res){
 			return;
 		} else {
 			if(rows == undefined){
-<<<<<<< HEAD
-				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?)");
-				stmt.run(username,password,city,state,country);
-=======
 				var thePlaces = [];
 				var places = JSON.stringify(thePlaces);
 				var theCompletes = [];
 				var completed = JSON.stringify(theCompletes)
 				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?,?,?)");
 				stmt.run(username,password,city,state,country,places,completed);
->>>>>>> origin/master
 				stmt.finalize();
 				res.send('OK');
 				return;
@@ -134,17 +122,12 @@ app.put('/users/*/*', function(req,res){
 					}
 				});	
 			} else {
-<<<<<<< HEAD
 				res.send("IncorrectInfo");
-=======
-				res.send({status: 'ERROR');
->>>>>>> origin/master
 				return;
 			}	
 		}
 	});
 	return;
-
 });
 
 //user delete request
@@ -207,22 +190,10 @@ app.post('/places/*/*', function(req,res){
 				stmt.run(name,type,city,state,country,currentCount);
 				stmt.finalize();
 			} else {
-<<<<<<< HEAD
 				currentCount = rows.count +1;
 				db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
 					if(err){
 						res.send({status: 'ERROR'});
-=======
-				currentCount = rows.count;
-			}
-
-			//increment the current count and update the object with the new count
-			currentCount++;
-			
-			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
-				if(err){
-					res.send({status: 'ERROR'});
->>>>>>> origin/master
 						return;
 					} 
 				});	
