@@ -1,0 +1,302 @@
+<!-- HTML search page
+	source: http://www.cssfontstack.com/Impact
+-->
+
+<html>
+	<head>
+
+		<style type="text/css">
+			h1{
+				font-size: 70px;
+				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+				font-weight:bold;
+				color: white;
+			}
+			h2{
+				color: #336699;
+			}
+			html{
+				background: url(earth.gif) no-repeat;
+				-webkit-background-size: cover;
+				-moz-background-size: cover;
+				-o-background-size: cover;
+				background-size: cover; 
+			}
+			a{
+				font-size:18px;
+				color:white;
+				font-style: italic;
+				text-shadow: 1px 1px 0px #bfbfbf;
+			}
+			a:hover{
+				font-size:18px;
+				color:blue;
+				font-style: normal;
+				text-shadow: 1px 1px 0px white;
+			}
+			.myButtons{
+				color: black;
+				background-color: #800000;
+    			width: 20em;
+    			height: 4em;
+    			border-radius: 10px;
+			}
+			.myButtons:hover{
+				background-color: #3399ff;
+			}
+			.dialog {
+    			--box-shadow-color: palegoldenrod;
+    			box-shadow: 5px 5px 5px rgb(0,0,25);
+    			background-color: rgb(0,0,0);
+			}
+			.dialogm .ui-dialog-titlebar {
+   				background-color: rgb(225, 0, 0);
+    			color: black;
+			}
+			.ui-dialog {
+   			border: 3px solid rgb(0, 0, 0);
+    		color: rgb(0,0,0);
+    		background-color: rgb(225,225,225);
+    		font: 18px/120% Arial, Helvetica, sans-serif;
+    		opacity: 100;
+			}
+			.ui-dialog-content {
+    			opacity: 100;
+			}
+			#message{
+				font-size: 30px;
+				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+				font-weight:bold;
+				color: #cc0000;
+			}
+			#search{
+				font-size: 20px;
+				font-weight:bold;
+				text-align:center;
+				color: white;
+			}
+			#p{
+				font-size: 20px;
+				color: white;
+			}
+			.myButtons{
+				color: black;
+				background-color: #800000;
+    			width: 20em;
+    			height: 4em;
+    			border-radius: 10px;
+			}
+			
+		</style>
+
+		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+		<script type="text/javascript">
+
+		function goToErrorPage(){
+			window.location = 'http://localhost:3000/error.html';
+		}
+
+		function goToSearchResults(){
+			window.location = 'http://localhost:3000/searchResults.html';
+		}
+
+
+		$(document).ready(function(){
+			$('#nameSearch').click(function(){
+				$.ajax({
+					url: "search/name/" + $('#name').val(),
+					type: "GET",
+					dataType: "json",
+					success: function(data){
+						if(data.status){
+							console.log(data.status);
+						} else {
+							console.log(data.length);
+							var array = [];
+							for(var i=0; i < data.length; i++){
+								array.push({"name": data[i].name,
+											"type": data[i].type,
+											"city": data[i].city,
+											"state": data[i].state,
+											"country": data[i].country});
+							}
+							localStorage['search'] = JSON.stringify(array);
+							goToSearchResults();
+						}
+					},
+					error: function(){
+						console.log("error");
+					}
+				});
+			});
+
+			$('#typeSearch').click(function(){
+				$.ajax({
+					url: "search/type/" + $('#type').val(),
+					type: "GET",
+					dataType: "json",
+					success: function(data){
+						if(data.status){
+							console.log(data.status);
+						} else {
+							console.log(data.length);
+							var array = [];
+							for(var i=0; i < data.length; i++){
+								array.push({"name": data[i].name,
+											"type": data[i].type,
+											"city": data[i].city,
+											"state": data[i].state,
+											"country": data[i].country});
+							}
+							localStorage['search'] = JSON.stringify(array);
+							goToSearchResults();
+						}
+					},
+					error: function(){
+						console.log("error");
+					}
+				});
+			});
+
+			$('#citySearch').click(function(){
+				$.ajax({
+					url: "search/city/" + $('#cityCity').val() + '/' + $('#cityState').val() + '/' + $('#cityCountry').val(),
+					type: "GET",
+					dataType: "json",
+					success: function(data){
+						if(data.status){
+							console.log(data.status);
+						} else {
+							console.log(data.length);
+							var array = [];
+							for(var i=0; i < data.length; i++){
+								array.push({"name": data[i].name,
+											"type": data[i].type,
+											"city": data[i].city,
+											"state": data[i].state,
+											"country": data[i].country});
+							}
+							localStorage['search'] = JSON.stringify(array);
+							goToSearchResults();
+						}
+					},
+					error: function(){
+						console.log("error");
+					}
+				});
+			});
+
+			$('#stateSearch').click(function(){
+				$.ajax({
+					url: "search/state/" + $('#stateState').val() + '/' + $('#stateCountry').val(),
+					type: "GET",
+					dataType: "json",
+					success: function(data){
+						if(data.status){
+							console.log(data.status);
+						} else {
+							console.log(data.length);
+							var array = [];
+							for(var i=0; i < data.length; i++){
+								array.push({"name": data[i].name,
+											"type": data[i].type,
+											"city": data[i].city,
+											"state": data[i].state,
+											"country": data[i].country});
+							}
+							localStorage['search'] = JSON.stringify(array);
+							goToSearchResults();
+						}
+					},
+					error: function(){
+						console.log("error");
+					}
+				});
+			});
+
+			$('#countrySearch').click(function(){
+				$.ajax({
+					url: "search/country/" + $('#countryCountry').val(),
+					type: "GET",
+					dataType: "json",
+					success: function(data){
+						if(data.status){
+							console.log(data.status);
+						} else {
+							console.log(data.length);
+							var array = [];
+							for(var i=0; i < data.length; i++){
+								array.push({"name": data[i].name,
+											"type": data[i].type,
+											"city": data[i].city,
+											"state": data[i].state,
+											"country": data[i].country});
+							}
+							localStorage['search'] = JSON.stringify(array);
+							goToSearchResults();
+						}
+					},
+					error: function(){
+						console.log("error");
+					}
+				});
+			});
+		});
+
+		</script>
+
+	</head>
+
+	<body>
+
+		<h1 align="center" id="bucket">Search</h1>
+		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
+		<p style="position: absolute; top:20px; left:1180px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
+		<p id ="search">Search by Name:</p>
+		<p align="center">Name:<input id="name" type="text" size = "20"/></p>
+		<p align="center"><button id="nameSearch" class="myButtons">Search by Name</button></p>
+		<p id="search">Search by Type:</p>
+		<p align="center">Type: <select id="type"></p>
+			<option></option>
+			<option>Arts and Entertainment</option>
+			<option>Amusement Park</option>
+			<option>College or University</option>
+			<option>Food and Drink</option>
+			<option>Historical Site</option>
+			<option>Landmark</option>
+			<option>Monument</option>
+			<option>Relaxation Spot</option>
+			<option>Sports</option>
+			<option>Other</option>
+		</select><br>
+		<p align="center"><button id="typeSearch" class="myButtons">Search by Type</button></p>
+		<p id="search">Search by City:</p>
+		<p align="center">City: <input id="cityCity" type="text" size="20"/></p>
+		<p align="center">State/Territory: <input id="cityState" type="text" size="20"></p>
+		<p align="center">Country:<select id="cityCountry"></p>
+			<option id=""></option>
+			<option id="US">United States</option>
+			<option id="AU">Australia</option>
+			<option id="UK">United Kingdom</option>
+		</select><br>
+		<p align="center"><button class ="myButtons" id="citySearch">Search by City</button></p>
+		<p id="search">Search by State/Territory:</p>
+		<p align="center">State/Territory: <input id="stateState" type="text" size="20"/></p>
+		<p align="center">Country:<select id="stateCountry"></p>
+			<option id=""></option>
+			<option id="US">United States</option>
+			<option id="AU">Australia</option>
+			<option id="UK">United Kingdom</option>
+		</select><br>
+		<p align="center"><button id="stateSearch">Search by State/Territory</button>
+		<p id="search">Search by Country:</p>
+		<p align="center">Country:<select id="countryCountry"></p>
+			<option id=""></option>
+			<option id="US">United States</option>
+			<option id="AU">Australia</option>
+			<option id="UK">United Kingdom</option>
+		</select><br>
+		<p align="center"><button id="countrySearch" class="myButtons">Search by Country</button>
+	</body>
+</html>
