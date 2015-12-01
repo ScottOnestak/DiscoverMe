@@ -122,13 +122,12 @@ app.put('/users/*/*', function(req,res){
 					}
 				});	
 			} else {
-				res.send({status: 'ERROR');
+				res.send("IncorrectInfo");
 				return;
 			}	
 		}
 	});
 	return;
-
 });
 
 //user delete request
@@ -191,22 +190,10 @@ app.post('/places/*/*', function(req,res){
 				stmt.run(name,type,city,state,country,currentCount);
 				stmt.finalize();
 			} else {
-<<<<<<< HEAD
 				currentCount = rows.count +1;
 				db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
 					if(err){
 						res.send({status: 'ERROR'});
-=======
-				currentCount = rows.count;
-			}
-
-			//increment the current count and update the object with the new count
-			currentCount++;
-			
-			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
-				if(err){
-					res.send({status: 'ERROR'});
->>>>>>> origin/master
 						return;
 					} 
 				});	
@@ -364,6 +351,7 @@ app.put('/complete/*/*', function(req,res){
 			}	
 		}
 	});
+	return;
 });
 
 
@@ -437,6 +425,172 @@ app.put('/remove/*/*', function(req,res){
 				res.send({status: "IncorrectInfo"});
 				return;
 			}	
+		}
+	});
+	return;
+});
+
+app.get('/search/name/*', function(req,res){
+
+	console.log("Variable:" + req.params[0]);
+
+	db.all('SELECT * from locate where name=?', req.params[0],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/type/*', function(req,res){
+
+	console.log("Variable:" + req.params[0]);
+
+	db.all('SELECT * from locate where type=?', req.params[0],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/city/*/*/*', function(req,res){
+	db.all('SELECT * from locate where city=? AND state=? AND country=?', [req.params[0],req.params[1],req.params[2]],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/state/*/*', function(req,res){
+	db.all('SELECT * from locate where state=? AND country=?', [req.params[0],req.params[1]],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/country/*', function(req,res){
+	db.all('SELECT * from locate where country=?', req.params[0],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
 		}
 	});
 	return;
