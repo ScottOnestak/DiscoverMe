@@ -1,15 +1,8 @@
 //The server for the project
-<<<<<<< HEAD
-//front end currently localhost/test.html
-//used the code from lectures 11 and 12 to implement the REST API
-//implementation of sqlite3 learned and taken from here https://github.com/mapbox/node-sqlite3
-//source: http://dalelane.co.uk/blog/?p=3152
-=======
 //source: lectures 11 and 12 to implement the REST API
 //source: https://github.com/mapbox/node-sqlite3
 //source: http://dalelane.co.uk/blog/?p=3152
 //source: http://stackoverflow.com/questions/1748794/is-there-an-arraylist-in-javascript
->>>>>>> origin/master
 
 var express = require('express');
 var app = express();
@@ -54,17 +47,12 @@ app.post('/users', function(req,res){
 			return;
 		} else {
 			if(rows == undefined){
-<<<<<<< HEAD
-				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?)");
-				stmt.run(username,password,city,state,country);
-=======
 				var thePlaces = [];
 				var places = JSON.stringify(thePlaces);
 				var theCompletes = [];
 				var completed = JSON.stringify(theCompletes)
 				var stmt = db.prepare("INSERT into peeps VALUES (?,?,?,?,?,?,?)");
 				stmt.run(username,password,city,state,country,places,completed);
->>>>>>> origin/master
 				stmt.finalize();
 				res.send('OK');
 				return;
@@ -134,17 +122,12 @@ app.put('/users/*/*', function(req,res){
 					}
 				});	
 			} else {
-<<<<<<< HEAD
 				res.send("IncorrectInfo");
-=======
-				res.send({status: 'ERROR');
->>>>>>> origin/master
 				return;
 			}	
 		}
 	});
 	return;
-
 });
 
 //user delete request
@@ -207,22 +190,10 @@ app.post('/places/*/*', function(req,res){
 				stmt.run(name,type,city,state,country,currentCount);
 				stmt.finalize();
 			} else {
-<<<<<<< HEAD
 				currentCount = rows.count +1;
 				db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
 					if(err){
 						res.send({status: 'ERROR'});
-=======
-				currentCount = rows.count;
-			}
-
-			//increment the current count and update the object with the new count
-			currentCount++;
-			
-			db.run('UPDATE locate SET count =? WHERE name =? AND city=? AND state=? AND country=?', [currentCount,name,city,state,country], function(err,rows){
-				if(err){
-					res.send({status: 'ERROR'});
->>>>>>> origin/master
 						return;
 					} 
 				});	
@@ -380,8 +351,63 @@ app.put('/complete/*/*', function(req,res){
 			}	
 		}
 	});
+	return;
 });
+app.put('/qresults', function(req,res){
+	console.log("put quiz results was called");
+	//might have to change this because it's not technically postBody
+	var postBody = req.body;
+	console.log(req.body);
+	var q1=postBody.q1;
+	var q2=postBody.q2;
+	var q3=postBody.q3;
+	var q4=postBody.q4;
+	var q5=postBody.q5;
+	var q6=postBody.q6;
+	var q7=postBody.q7;
+	var q8=postBody.q8;
+	var q9=postBody.q9;
+	var q10=postBody.q10;
+	var countryArray=[q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
+	var mCount=0;
+	var dCount=0;
+	var rCount=0;
+	var sCount=0;
 
+	for(var i=0;i<countryArray.length;i++){
+		console.log(countryArray[i]);
+		if(countryArray[i]==='a'){
+			mCount++;
+		}else if(countryArray[i]==='b'){
+			dCount++;
+		}else if(countryArray[i]==='c'){
+			rCount++;
+		}else if(countryArray[i]==='d'){
+			sCount++;
+		}
+	}
+	console.log(mCount+", "+dCount+","+rCount+","+sCount);
+	if(mCount > dCount && mCount > rCount && mCount > sCount){
+		res.send({city: "madrid",
+				country: "spain"});
+		return;
+	}else if(dCount > mCount && dCount > rCount && dCount > sCount){
+		res.send({city:"dublin",
+				country:"ireland"});
+		return;
+	}else if(rCount> mCount && rCount > dCount && rCount> sCount){
+		res.send({city:"rio",
+				country:"brazil"});
+	}else if(sCount > mCount && sCount > dCount && sCount > rCount){
+		res.send({city:"sydney",
+				country:"australia"});
+		return;
+	}else{
+		console.log("could not calculate country")
+		res.send({status: "ERROR"});
+		return;
+	}
+});
 
 app.put('/remove/*/*', function(req,res){
 	var postBody = req.body;
@@ -453,6 +479,172 @@ app.put('/remove/*/*', function(req,res){
 				res.send({status: "IncorrectInfo"});
 				return;
 			}	
+		}
+	});
+	return;
+});
+
+app.get('/search/name/*', function(req,res){
+
+	console.log("Variable:" + req.params[0]);
+
+	db.all('SELECT * from locate where name=?', req.params[0],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/type/*', function(req,res){
+
+	console.log("Variable:" + req.params[0]);
+
+	db.all('SELECT * from locate where type=?', req.params[0],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/city/*/*/*', function(req,res){
+	db.all('SELECT * from locate where city=? AND state=? AND country=?', [req.params[0],req.params[1],req.params[2]],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/state/*/*', function(req,res){
+	db.all('SELECT * from locate where state=? AND country=?', [req.params[0],req.params[1]],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
+		}
+	});
+	return;
+});
+
+app.get('/search/country/*', function(req,res){
+	db.all('SELECT * from locate where country=?', req.params[0],function(err,rows){
+		if(err){
+			res.send({status: 'ERROR'});
+			return;
+		} else {
+			if(rows == undefined){
+				res.send({status: 'NoResults'});
+				return;
+			} else {
+				var theLength = [];
+				
+				for(var i=0; i < rows.length; i++){
+					theLength.push({"name": rows[i].name,
+									"type": rows[i].type,
+									"city": rows[i].city,
+									"state": rows[i].state,
+									"country": rows[i].country});
+				}
+
+				var theSearch = JSON.stringify(theLength);
+
+				console.log(theSearch);
+
+				res.send(theSearch);
+				return;
+			}
 		}
 	});
 	return;
