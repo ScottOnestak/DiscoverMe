@@ -8,13 +8,15 @@
 				font-size: 70px;
 				font-family: Papyrus, fantasy;
 				font-weight:bold;
-				color: #000000;
+				color: white;
+				text-shadow: 3px 3px 2px #000000;
 			}
 			h2{
+				text-align:center;
 				color: #336699;
 			}
 			html{
-				background: url(paper.jpg) no-repeat;
+				background: url(paper.gif) no-repeat;
 				background-attachment: fixed;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
@@ -36,8 +38,9 @@
 			.myButtons{
 				color: black;
 				background-color: #ffe5e5;
-    			width: 30em;
-    			height: 5em;
+				text-align:center;
+    			width: 32em;
+    			height: 6em;
     			border-radius: 10px;
 			}
 			.myButtons:hover{
@@ -60,17 +63,24 @@
 			window.location = 'http://localhost:3000/error.html';
 		}
 
+		function goToLogin(){
+			window.location = 'http://localhost:3000/test.html';
+		}
+
 
 		$(document).ready(function(){
 
 			if(localStorage.getItem('username')){
 				$('#bucket').append(" for " + localStorage.getItem('username'));
+			} else {
+				goToLogin();
 			}
 
-			if(localStorage.getItem('completed') != "[]"){
-				document.body.appendChild(document.createElement("BR"));
-				document.body.appendChild(document.createElement("BR"));
-				document.body.appendChild(document.createElement("BR"));
+			if(localStorage.getItem('completed') == null | localStorage.getItem('completed') == "[]"){
+				$('#message').text("You have no completed places or events to display at this time.");
+			} else {
+				document.getElementById('theElements').appendChild(document.createElement("BR"));
+				document.getElementById('theElements').appendChild(document.createElement("BR"));
 				var buttons = [];
 				var locations = JSON.parse(localStorage.getItem('completed'));
 				for(var i = 0; i < locations.length; i++){
@@ -100,12 +110,8 @@
 					buttons[i].appendChild(lineBreak2);
 					buttons[i].appendChild(type);
 					//buttons[i].addEventListener('click', myFunction);					
-					document.body.appendChild(buttons[i]);
-					document.body.appendChild(document.createElement("BR"));
-					document.body.appendChild(document.createElement("BR"));
+					document.getElementById('theElements').appendChild(buttons[i]);					
 				}
-			} else {
-				$('#message').text("You have no completed places or events to display at this time.");
 			}
 		});
 			
@@ -119,6 +125,7 @@
 		<h1 align="center" id="bucket">Completed Bucket List</h1>
 		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
 		<p style="position: absolute; top:180px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
+		<h2><div id="theElements"></div></h2>
 		
 	</body>
 </html>

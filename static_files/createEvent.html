@@ -125,7 +125,11 @@
 								$("#country").css("background-color", "#993333");
 							}
 
-						} else if(data.status == 'MADE ERROR'){
+						} else if(data.status == 'PLACES'){
+							$('#status').text("You already have this in your bucket list.");
+						} else if(data.status == 'COMPLETED'){
+							$('#status').text("You have already completed this event.");
+						}else if(data.status == 'MADE ERROR'){
 							$('#status').text("Event Made.  Could not add to your bucket list.");
 						}else {
 							$('#status').text("ERROR");

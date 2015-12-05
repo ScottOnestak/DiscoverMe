@@ -7,7 +7,8 @@
 	 source: http://stackoverflow.com/questions/9389952/how-to-change-background-color-of-jquery-ui-dialog
 	 source: http://stackoverflow.com/questions/14850153/jquery-ui-dialog-work-with-the-background-only-opacity-without-graying-the-fon
 	 source: http://jsfiddle.net/taditdash/vvjj8/
-
+	 source: http://stackoverflow.com/questions/28735497/how-do-i-insert-a-close-button-inside-my-popup
+	 source: http://dinbror.dk/bpopup/
 -->
 
 <html>
@@ -18,13 +19,15 @@
 				font-size: 70px;
 				font-family: Papyrus, fantasy;
 				font-weight:bold;
-				color: #000000;
+				color: white;
+				text-shadow: 3px 3px 2px #000000;
 			}
 			h2{
+				text-align:center;
 				color: #336699;
 			}
 			html{
-				background: url(paper.jpg) no-repeat;
+				background: url(paper.gif) no-repeat;
 				background-attachment: fixed;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
@@ -46,31 +49,13 @@
 			.myButtons{
 				color: black;
 				background-color: #ffe5e5;
-    			width: 30em;
-    			height: 5em;
-    			border-radius: 10px;
+    			width: 32em;
+    			height: 6em;
+    			border-radius: 12px;
+    			align:center;
 			}
 			.myButtons:hover{
-				background-color: #ff1a1a;
-			}
-			.dialog {
-    			--box-shadow-color: palegoldenrod;
-    			box-shadow: 5px 5px 5px rgb(0,0,25);
-    			background-color: rgb(0,0,0);
-			}
-			.dialogm .ui-dialog-titlebar {
-   				background-color: rgb(225, 0, 0);
-    			color: black;
-			}
-			.ui-dialog {
-   			border: 3px solid rgb(0, 0, 0);
-    		color: rgb(0,0,0);
-    		background-color: rgb(225,225,225);
-    		font: 18px/120% Arial, Helvetica, sans-serif;
-    		opacity: 100;
-			}
-			.ui-dialog-content {
-    			opacity: 100;
+				background-color: #ffa64d;
 			}
 			#message{
 				font-size: 30px;
@@ -78,28 +63,78 @@
 				font-weight:bold;
 				color: #cc0000;
 			}
+			#popup, .bMulti {
+    			background-color: #FFF;
+    			border-radius: 10px 10px 10px 10px;
+    			box-shadow: 0 0 25px 5px #999;
+    			color: #111;
+    			display: none;
+    			min-width: 350px;
+    			min-height: 150px;
+    			padding: 25px;
+			}
+			#popup .logo {
+   				color: #2B91AF;
+    			font: bold 325% 'Petrona',sans;
+    			text-align: center;
+			}
+			.button.b-close, .button.bClose {
+    			border-radius: 7px 7px 7px 7px;
+    			box-shadow: none;
+    			font: bold 131% sans-serif;
+    			padding: 0 6px 2px;
+    			position: absolute;
+    			right: -7px;
+    			top: -7px;
+			}
+			.button {
+    			background-color: #b3b3b3;
+    			border-radius: 10px;
+    			box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    			color: #FFF;
+    			cursor: pointer;
+    			display: inline-block;
+    			padding: 10px 20px;
+    			text-align: center;
+    			text-decoration: none;
+			}
+			#popup{
+				text-align:center;
+			}
+			
 			
 		</style>
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://dinbror.dk/bpopup/assets/jquery.bpopup-0.9.4.min.js"></script>
+		<script src="http://dinbror.dk/bpopup/assets/jquery.easing.1.3.js"></script>
 		<script type="text/javascript">
 
 		function goToErrorPage(){
 			window.location = 'http://localhost:3000/error.html';
 		}
 
+		function goToLogin(){
+			window.location = 'http://localhost:3000/test.html';
+		}
 
 		$(document).ready(function(){
 
 			if(localStorage.getItem('username')){
 				$('#bucket').append(" for " + localStorage.getItem('username'));
+			} else {
+				goToLogin();
 			}
 
-			if(localStorage.getItem('places') != "[]"){
-				document.body.appendChild(document.createElement("BR"));
-				document.body.appendChild(document.createElement("BR"));
-				document.body.appendChild(document.createElement("BR"));
+			console.log(localStorage.getItem('places'));
+
+			if(localStorage.getItem('places') == null | localStorage.getItem('places') == "[]"){
+				$('#message').text("You have no places or events to display at this time.");
+			} else {
+				//document.getElementById('theElements').appendChild(document.createElement("BR"));
+				document.getElementById('theElements').appendChild(document.createElement("BR"));
 				var buttons = [];
 				var locations = JSON.parse(localStorage.getItem('places'));
 				for(var i = 0; i < locations.length; i++){
@@ -116,6 +151,7 @@
 					buttons[i].setAttribute("id", JSON.stringify(locations[i]));
 					buttons[i].setAttribute("class", "myButtons");
 					buttons[i].setAttribute("width", "400px");
+					buttons[i].setAttribute("align", "center");
 					console.log(buttons[i].getAttribute('id'));
 					buttons[i].style.textAlign = 'left';
 					buttons[i].style.fontSize = '15px';
@@ -128,53 +164,28 @@
 					buttons[i].appendChild(country);
 					buttons[i].appendChild(lineBreak2);
 					buttons[i].appendChild(type);
-					buttons[i].addEventListener('click', myFunction);					
-					document.body.appendChild(buttons[i]);
-					document.body.appendChild(document.createElement("BR"));
-					document.body.appendChild(document.createElement("BR"));
+					buttons[i].addEventListener('click', myFunction);
+					document.getElementById('theElements').appendChild(buttons[i]);
+					//document.getElementById('theElements').appendChild(document.createElement("BR"));
+					//document.getElementById('theElements').appendChild(document.createElement("BR"));					
 				}
-			} else {
-				$('#message').text("You have no places or events to display at this time.");
 			}
-			
+
 			function myFunction(){
-				var theInformation = this.id;
+				var id = this.id;
+				var info = JSON.parse(this.id);
+				$('#popup').empty();
+				$('#popup').bPopup({
+								speed: 650,
+            					transition: 'slideIn',
+	    						transitionClose: 'slideBack',
+            					positionStyle: 'fixed'
+				});
+				var html = $("#popup").html();
+                $("#popup").html(html + "<br>Do you wish to check off or remove:<br><br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> from your bucket list?<br><br><button id='checkOff' class='button'>Check Off</button>          <button id='remove' class='button'>Remove</button>");
 
-				$("#dialog-confirm").html("<br><br>Do you wish to check off " + theInformation.name + " from your bucket list or remove it?");
-
-				$("#dialog-confirm").dialog({
-       				resizable: false,
-      				modal: true,
-     				title: "~~~~~Please Confirm Your Request~~~~~",
-     				height: 250,
-        			width: 400,
-        			buttons: {
-            			"Check Off": function () {
-                			$(this).dialog('close');
-                			callback(true, theInformation);
-            			},
-                		"Remove": function () {
-                			$(this).dialog('close');
-                			callback(false, theInformation);
-            			}
-        			}
-    			});
-				
-				this.style.backgroundColor = "#d9d9d9";
-				this.setAttribute("disabled","disabled");
-			}
-
-			function callback(value, theInformation){
-				var info = JSON.parse(theInformation);
-
-				console.log(info.name);
-				console.log(localStorage.getItem('username'));
-
-				$(document).ajaxError(function() {
-    				alert("Sorry, there was a problem!");
-  				});
-				if(value){
-					$.ajax({
+               document.getElementById('checkOff').addEventListener('click', function(){
+               		$.ajax({
 						url: "complete/" + localStorage.getItem('username') + "/" + localStorage.getItem('password'),
 						type: "PUT",
 						dataType: "json",
@@ -188,18 +199,25 @@
 							if(data.username){
 								localStorage['places'] = data.places;
 								localStorage['completed'] = data.completed;
+								document.getElementById('theElements').removeChild(document.getElementById(id));
+								if(localStorage.getItem('places') == null | localStorage.getItem('places') == "[]"){
+									$('#message').text("You have no places or events to display at this time.");
+								}
+								$('#popup').bPopup().close();
 							} else if(data.status){
-								//goToErrorPage();
+								goToErrorPage();
 							} else {
-								//goToErrorPage();
+								goToErrorPage();
 							}
 						},
 						error: function(){
-							//goToErrorPage();
+							goToErrorPage();
 						}
 					});
-				} else {
-					$.ajax({
+               });
+
+               document.getElementById('remove').addEventListener('click',function(){
+               	$.ajax({
 						url: "remove/" + localStorage.getItem('username') + "/" + localStorage.getItem('password'),
 						type: "PUT",
 						dataType: "json",
@@ -212,6 +230,11 @@
 							console.log(data);
 							if(data.username){
 								localStorage['places'] = data.places;
+								document.getElementById('theElements').removeChild(document.getElementById(id));
+								if(localStorage.getItem('places') == null | localStorage.getItem('places') == "[]"){
+									$('#message').text("You have no places or events to display at this time.");
+								}
+								$('#popup').bPopup().close();
 							} else if(data.status){
 								goToErrorPage();
 							} else {
@@ -222,7 +245,7 @@
 							goToErrorPage();
 						}
 					});
-				}
+               });
 			}
 		});
 
@@ -234,8 +257,9 @@
 
 		<h1 align="center" id="bucket">Bucket List</h1>
 		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
-		<p style="position: absolute; top:180px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
-		<div id="dialog-confirm"></div>
+		<p style="position: absolute; top:180px; left:1170px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
+		<h2><div id="theElements"></div></h2>
+		<div id="popup"></div>
 		
 	</body>
 </html>

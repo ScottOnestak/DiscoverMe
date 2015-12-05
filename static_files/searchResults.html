@@ -6,15 +6,17 @@
 		<style type="text/css">
 			h1{
 				font-size: 70px;
-				font-family: Papyrus, fantasy;
+				font-family: 'Rockwell Extra Bold', 'Rockwell Bold', monospace;
 				font-weight:bold;
-				color: #000000;
+				color: white;
 			}
 			h2{
+				text-align:center;
 				color: #336699;
 			}
 			html{
-				background: url(paper.jpg) no-repeat;
+				background: url(globeSearch.jpg) no-repeat;
+				background-attachment: fixed;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
@@ -34,44 +36,62 @@
 			}
 			.myButtons{
 				color: black;
-				background-color: #ffe5e5;
-    			width: 30em;
-    			height: 5em;
+				background-color: #ffcccc;
+    			width: 32em;
+    			height: 6em;
     			border-radius: 10px;
 			}
 			.myButtons:hover{
 				background-color: #ff1a1a;
 			}
-			.dialog {
-    			--box-shadow-color: palegoldenrod;
-    			box-shadow: 5px 5px 5px rgb(0,0,25);
-    			background-color: rgb(0,0,0);
-			}
-			.dialogm .ui-dialog-titlebar {
-   				background-color: rgb(225, 0, 0);
-    			color: black;
-			}
-			.ui-dialog {
-   			border: 3px solid rgb(0, 0, 0);
-    		color: rgb(0,0,0);
-    		background-color: rgb(225,225,225);
-    		font: 18px/120% Arial, Helvetica, sans-serif;
-    		opacity: 100;
-			}
-			.ui-dialog-content {
-    			opacity: 100;
-			}
 			#message{
 				font-size: 30px;
-				font-family: Papyrus, fantasy;
+				font-family: 'Rockwell Extra Bold', 'Rockwell Bold', monospace;
 				font-weight:bold;
-				color: #cc0000;
+				color: yellow;
+			}
+			#popup, .bMulti {
+    			background-color: #FFF;
+    			border-radius: 10px 10px 10px 10px;
+    			box-shadow: 0 0 25px 5px #999;
+    			color: #111;
+    			display: none;
+    			min-width: 350px;
+    			min-height: 150px;
+    			padding: 25px;
+			}
+			#popup .logo {
+   				color: #2B91AF;
+    			font: bold 325% 'Petrona',sans;
+    			text-align: center;
+			}
+			.button.b-close, .button.bClose {
+    			border-radius: 7px 7px 7px 7px;
+    			box-shadow: none;
+    			font: bold 131% sans-serif;
+    			padding: 0 6px 2px;
+    			position: absolute;
+    			right: -7px;
+    			top: -7px;
+			}
+			.button {
+    			background-color: #2B91AF;
+    			border-radius: 10px;
+    			box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+    			color: #FFF;
+    			cursor: pointer;
+    			display: inline-block;
+    			padding: 10px 20px;
+    			text-decoration: none;
 			}
 			
 		</style>
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://dinbror.dk/bpopup/assets/jquery.bpopup-0.9.4.min.js"></script>
+		<script src="http://dinbror.dk/bpopup/assets/jquery.easing.1.3.js"></script>
 		<script type="text/javascript">
 
 		function goToErrorPage(){
@@ -82,13 +102,15 @@
 		$(document).ready(function(){
 
 			if(localStorage.getItem('search') != "[]"){
-				document.body.appendChild(document.createElement("BR"));
-				document.body.appendChild(document.createElement("BR"));
-				document.body.appendChild(document.createElement("BR"));
+				document.getElementById('theElements').appendChild(document.createElement("BR"));
+				document.getElementById('theElements').appendChild(document.createElement("BR"));
 				var buttons = [];
+				var places = JSON.parse(localStorage.getItem('places'));
+				var completed = JSON.parse(localStorage.getItem('completed'));
 				var locations = JSON.parse(localStorage.getItem('search'));
 				for(var i = 0; i < locations.length; i++){
-					console.log("Location " + i + ": " + locations[i])
+					console.log(locations[i]);
+					var theLoc = locations[i];
 					buttons[i] = document.createElement("BUTTON");
 					var name = document.createTextNode(locations[i].name);
 					var lineBreak1 = document.createElement("BR");
@@ -99,7 +121,23 @@
 					var comma1 = document.createTextNode(", ");
 					var comma2 = document.createTextNode(", ");
 					var type = document.createTextNode(locations[i].type);
-					console.log("The JSON: " + JSON.stringify(locations[i]));
+
+					for(var j = 0; j < places.length; j++){
+						if(places[j].name == locations[i].name && places[j].city === locations[i].city && places[j].state === locations[i].state && places[j].country == locations[i].country){
+							buttons[i].setAttribute("disabled","disabled");
+							buttons[i].style.backgroundColor = "#d9d9d9";
+							break;
+						}
+					}
+
+					for(var k = 0; k < completed.length; k++){
+						if(completed[k].name === locations[i].name && completed[k].city === locations[i].city && completed[k].state === locations[i].state && completed[k].country == locations[i].country){
+							buttons[i].setAttribute("disabled","disabled");
+							buttons[i].style.backgroundColor = "#d9d9d9";
+							break;
+						}
+					}
+
 					buttons[i].setAttribute("id", JSON.stringify(locations[i]));
 					buttons[i].setAttribute("class", "myButtons");
 					buttons[i].setAttribute("width", "400px");
@@ -116,9 +154,9 @@
 					buttons[i].appendChild(lineBreak2);
 					buttons[i].appendChild(type);
 					buttons[i].addEventListener('click', myFunction);					
-					document.body.appendChild(buttons[i]);
-					document.body.appendChild(document.createElement("BR"));
-					document.body.appendChild(document.createElement("BR"));
+					document.getElementById('theElements').appendChild(buttons[i]);
+					//document.getElementById('theElements').appendChild(document.createElement("BR"));
+					//document.getElementById('theElements').appendChild(document.createElement("BR"));
 				}
 			} else {
 				$('#message').text("You have no places or events to display at this time.");
@@ -126,6 +164,7 @@
 			
 			function myFunction(){
 
+				var id = this.id;
 				var info = JSON.parse(this.id);
 
 				$.ajax({
@@ -140,35 +179,38 @@
 					success: function(data){
 						console.log(data);
 						if(data.username){
+							//add places to the local storage
 							localStorage['places'] = data.places;
-
-							$("#dialog-confirm").html("<br>Successfully added<br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
-
-							$("#dialog-confirm").dialog({
-       							resizable: false,
-      							modal: true,
-     							height: 250,
-        						width: 400	
-    						});
+							//disable the button and change the color to a light green
+							document.getElementById(id).setAttribute("disabled","disabled");
+							document.getElementById(id).style.backgroundColor = "#99ff99";
+							//create a popup that lasts 2 seconds to tell the user that the item was added to their list
+							$('#popup').empty();
+							$('#popup').bPopup({
+								speed: 650,
+            					transition: 'slideIn',
+	    						transitionClose: 'slideBack',
+            					autoClose: 2000,
+            					positionStyle: 'fixed'
+							});
+							var html = $("#popup").html();
+                			$("#popup").html(html + "<br>Successfully added:<br><br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
 
 						} else {
-							$("#dialog-confirm").html("<br>Could not add<br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
 
-							$("#dialog-confirm").dialog({
-       							resizable: false,
-      							modal: true,
-     							height: 250,
-        						width: 400
-    						});
+							$('#popup').bPopup({
+								speed: 650,
+            					transition: 'slideIn',
+	    						transitionClose: 'slideBack',
+            					autoClose: 2000,
+            					positionStyle: 'fixed'
+							});
+							var html = $("#popup").html();
+                			$("#popup").html(html + "<br>Could not add<br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
 						}
 					}
-				});
-				
-				this.style.backgroundColor = "green";
-				this.setAttribute("disabled","disabled");
-				
+				});				
 			}
-
 		});
 
 		</script>
@@ -178,10 +220,10 @@
 	<body>
 
 		<h1 align="center" id="bucket">Search Results</h1>
-		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
-		<p style="position: absolute; top:180px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
-		<p style="position: absolute; top:220px; left:1200px; width:150px; height:30px"><a href="http://localhost:3000/search.html">Search Again</a></p>
-		<div id="dialog-confirm"></div>
-
+		<div style="position: absolute; top:350px; left:250px; width:900px; height:30px" id="message"></div>
+		<p style="position: absolute; top:180px; left:1180px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
+		<p style="position: absolute; top:220px; left:1180px; width:150px; height:30px"><a href="http://localhost:3000/search.html">Search Again</a></p>
+		<h2><div id="theElements"></div></h2>
+		<div id="popup"></div>
 	</body>
 </html>
