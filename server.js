@@ -666,7 +666,10 @@ app.put('/qresults', function(req,res){
 		res.send({status: "ERROR"});
 		return;
 	}
+<<<<<<< HEAD
 	return;
+=======
+>>>>>>> origin/master
 });
 
 // start the server on http://localhost:3000/
