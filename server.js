@@ -212,6 +212,22 @@ app.post('/places/*/*', function(req,res){
 					}
 					
 					var thePlaces = JSON.parse(row.places);
+					var theCompletes = JSON.parse(row.completed);
+
+					for(var i = 0; i < thePlaces.length; i++){
+						if(thePlaces[i].name == name & thePlaces[i].city == city & thePlaces[i].state == state & thePlaces[i].country == country){
+							res.send({status: 'PLACES'});
+							return;
+						}
+					}
+
+					for(var i=0; i < theCompletes.length; i++){
+						if(theCompletes[i].name == name & theCompletes[i].city == city & theCompletes[i].state == state & theCompletes[i].country == country){
+							res.send({status: 'COMPLETED'});
+							return;
+						}
+					}
+
 					thePlaces.push({"name": name,
 									"type": type,
 								    "city": city,
@@ -593,6 +609,63 @@ app.get('/search/country/*', function(req,res){
 			}
 		}
 	});
+	return;
+});
+
+app.put('/qresults', function(req,res){
+	console.log("put quiz results was called");
+	//might have to change this because it's not technically postBody
+	var postBody = req.body;
+	console.log(req.body);
+	var q1=postBody.q1;
+	var q2=postBody.q2;
+	var q3=postBody.q3;
+	var q4=postBody.q4;
+	var q5=postBody.q5;
+	var q6=postBody.q6;
+	var q7=postBody.q7;
+	var q8=postBody.q8;
+	var q9=postBody.q9;
+	var q10=postBody.q10;
+	var countryArray=[q1,q2,q3,q4,q5,q6,q7,q8,q9,q10];
+	var mCount=0;
+	var dCount=0;
+	var rCount=0;
+	var sCount=0;
+
+	for(var i=0;i<countryArray.length;i++){
+		console.log(countryArray[i]);
+		if(countryArray[i]==='a'){
+			mCount++;
+		}else if(countryArray[i]==='b'){
+			dCount++;
+		}else if(countryArray[i]==='c'){
+			rCount++;
+		}else if(countryArray[i]==='d'){
+			sCount++;
+		}
+	}
+	console.log(mCount+", "+dCount+","+rCount+","+sCount);
+	if(mCount > dCount && mCount > rCount && mCount > sCount){
+		res.send({city: "madrid",
+				country: "spain"});
+		return;
+	}else if(dCount > mCount && dCount > rCount && dCount > sCount){
+		res.send({city:"dublin",
+				country:"ireland"});
+		return;
+	}else if(rCount> mCount && rCount > dCount && rCount> sCount){
+		res.send({city:"rio",
+				country:"brazil"});
+	}else if(sCount > mCount && sCount > dCount && sCount > rCount){
+		res.send({city:"sydney",
+				country:"australia"});
+		return;
+	}else{
+		console.log("could not calculate country")
+		res.send({status: "ERROR"});
+		return;
+	}
 	return;
 });
 
