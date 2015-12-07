@@ -101,15 +101,57 @@
 			#popup{
 				text-align:center;
 			}
+		.modal-body {
+    			min-height: 350px;
+    			-webkit-overflow-scrolling: touch;
+    			overflow: visible;
+			}
+			.fixed-dialog{
+  				position: fixed;
+  				top: 50px;
+  				left: 50px;
+			}
+			.ui-widget {
+    			font-family: Verdana,Arial,sans-serif;
+    			font-size: .8em;
+    			opacity:1.0;
+			}
+
+			.ui-widget-content {
+    			background: rgba(0,0,0,0);
+    			color: #222222;
+			}
+
+			.ui-dialog {
+    			left: 0;
+    			outline: 0 none;
+    			padding: 0 !important;
+    			position: absolute;
+    			top: 0;
+
+			}
+			.ui-dialog .ui-dialog-content {
+				background-color: #FFF;
+    			border-radius: 10px 10px 10px 10px;
+    			background: none repeat scroll 0 0 transparent;
+   				border: 0 none;
+    			overflow: auto;
+   				position: relative;
+    			padding: 25px;
+    			box-shadow: 0 0 25px 25px #ffffff;
+			}
+			.ui-dialog-titlebar-close {
+  				visibility: hidden;
+			}
+			.ui-widget-overlay {
+   				background-color: white;
+			}
 			
 			
 		</style>
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-		<script src="http://dinbror.dk/bpopup/assets/jquery.bpopup-0.9.4.min.js"></script>
-		<script src="http://dinbror.dk/bpopup/assets/jquery.easing.1.3.js"></script>
 		<script type="text/javascript">
 
 		function goToErrorPage(){
@@ -175,12 +217,21 @@
 				var id = this.id;
 				var info = JSON.parse(this.id);
 				$('#popup').empty();
-				$('#popup').bPopup({
-								speed: 650,
-            					transition: 'slideIn',
-	    						transitionClose: 'slideBack',
-            					positionStyle: 'fixed'
+				$('#popup').dialog({
+					width: 400,
+					height: 260,
+  					autoOpen: true,
+  					dialogClass: "fixed-dialog",
+  					show: {
+    					effect: "drop",
+    					duration: 1000
+  					},
+  					hide: {
+    					effect: "explode",
+    					duration: 200
+  					}
 				});
+
 				var html = $("#popup").html();
                 $("#popup").html(html + "<br>Do you wish to check off or remove:<br><br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> from your bucket list?<br><br><button id='checkOff' class='button'>Check Off</button>          <button id='remove' class='button'>Remove</button>");
 
@@ -203,7 +254,7 @@
 								if(localStorage.getItem('places') == null | localStorage.getItem('places') == "[]"){
 									$('#message').text("You have no places or events to display at this time.");
 								}
-								$('#popup').bPopup().close();
+								$('#popup').dialog('close');
 							} else if(data.status){
 								goToErrorPage();
 							} else {
@@ -234,7 +285,7 @@
 								if(localStorage.getItem('places') == null | localStorage.getItem('places') == "[]"){
 									$('#message').text("You have no places or events to display at this time.");
 								}
-								$('#popup').bPopup().close();
+								$('#popup').dialog('close');
 							} else if(data.status){
 								goToErrorPage();
 							} else {
