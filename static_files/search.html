@@ -33,9 +33,13 @@
 			html{
 				background-color:transparent;
 <<<<<<< HEAD
+<<<<<<< HEAD
 				background: url(world.jpg) no-repeat;
 =======
 				background: url(earth.gif) no-repeat;
+>>>>>>> origin/master
+=======
+				background: url(world.jpg) no-repeat;
 >>>>>>> origin/master
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
@@ -82,9 +86,13 @@
     			background-color: #FFF;
     			border-radius: 20px 20px 20px 20px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     			box-shadow: 0 0 5px 5px #ffffff;
 =======
     			box-shadow: 0 0 25px 5px #ffffff;
+>>>>>>> origin/master
+=======
+    			box-shadow: 0 0 5px 5px #ffffff;
 >>>>>>> origin/master
     			color: #111;
     			display: none;
@@ -199,6 +207,7 @@
    				position: relative;
     			padding: 25px;
 <<<<<<< HEAD
+<<<<<<< HEAD
     			box-shadow: 0 0 15px 15px #ffffff;
 			}
 			.ui-dialog-titlebar-close {
@@ -221,6 +230,25 @@
 			}
 			.ui-dialog-titlebar-close {
   				visibility: hidden;
+>>>>>>> origin/master
+=======
+    			box-shadow: 0 0 15px 15px #ffffff;
+			}
+			.ui-dialog-titlebar-close {
+  				background-color: #2B91AF;
+    			border-radius: 10px;
+    			box-shadow: 0 2px 3px rgba(225, 225, 225, 0.3);
+    			color: #FFF;
+    			cursor: pointer;
+    			display: inline-block;
+    			padding: 5px 10px;
+    			color:white;
+    			font-weight:bold;
+    			text-decoration: none;
+			}
+			.ui-dialog-titlebar-close:hover{
+				background-color: #ff6600;
+				font-style: italic;
 >>>>>>> origin/master
 			}
 			.ui-widget-overlay {
@@ -266,9 +294,13 @@
 
 			var html = $("#popup").html();
 <<<<<<< HEAD
+<<<<<<< HEAD
 			$("#popup").html(html + "<button id='Place' class='TheBUTTON'>Place</button><button id='Type' class='button'>Type</button><button id='City' class='button'>City</button><button id='State' class='button'>State</button><button id='Country' class='button'>Country</button><br><br><br><p id='field'>Search by Name</p><p align='center'>Name:<input id='name' type='text' size = '20'/></p><p align='center'><button id='nameSearch' class='theButton'>Search by Name</button></p>"); 
 =======
 			$("#popup").html(html + "<button id='Place' class='TheBUTTON'>Place</button><button id='Type' class='button'>Type</button><button id='City' class='button'>City</button><button id='State' class='button'>State</button><button id='Country' class='button'>Country</button><br><br><br><br><p id='field'>Search by Name</p><p align='center'>Name:<input id='name' type='text' size = '20'/></p><p align='center'><button id='nameSearch' class='theButton'>Search by Name</button></p>"); 
+>>>>>>> origin/master
+=======
+			$("#popup").html(html + "<button id='Place' class='TheBUTTON'>Place</button><button id='Type' class='button'>Type</button><button id='City' class='button'>City</button><button id='State' class='button'>State</button><button id='Country' class='button'>Country</button><br><br><br><p id='field'>Search by Name</p><p align='center'>Name:<input id='name' type='text' size = '20'/></p><p align='center'><button id='nameSearch' class='theButton'>Search by Name</button></p>"); 
 >>>>>>> origin/master
 
 			$(document).on('click', '.button', function(e){
@@ -472,9 +504,13 @@
 							if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
 								buttons[i].setAttribute("disabled","disabled");
 <<<<<<< HEAD
+<<<<<<< HEAD
 								buttons[i].style.backgroundColor = "#ffffff";
 =======
 								buttons[i].style.backgroundColor = "#d9d9d9";
+>>>>>>> origin/master
+=======
+								buttons[i].style.backgroundColor = "#ffffff";
 >>>>>>> origin/master
 								break;
 							}
@@ -484,9 +520,13 @@
 							if(completed[k].name === data[i].name && completed[k].city === data[i].city && completed[k].state === data[i].state && completed[k].country == data[i].country){
 								buttons[i].setAttribute("disabled","disabled");
 <<<<<<< HEAD
+<<<<<<< HEAD
 								buttons[i].style.backgroundColor = "#ffffff";
 =======
 								buttons[i].style.backgroundColor = "#d9d9d9";
+>>>>>>> origin/master
+=======
+								buttons[i].style.backgroundColor = "#ffffff";
 >>>>>>> origin/master
 								break;
 							}
