@@ -213,7 +213,9 @@
 		}
 	
 		$(document).ready(function(){
-			if(localStorage.getItem('results') &&localStorage.getItem('locationResults')){
+
+			if(localStorage.getItem('results') && localStorage.getItem('locationResults')){
+
 				$('#qresults').append( localStorage.getItem('results')+ "," + localStorage.getItem('locationResults'));
 
 				$.ajax({
@@ -236,16 +238,14 @@
 							goToErrorPage();
 						}
 					});
-			} 
-
-			function createElements(data){
+			}
+			
+			 function createElements(data){
 				var theString = data.length;
 				console.log(theString);
 				if(data.length == 0){
 					$('#message').html("There are no search results found");
 				} else {
-					//document.getElementById('theElements').appendChild(document.createElement("BR"));
-					//document.getElementById('theElements').appendChild(document.createElement("BR"));
 					var buttons = [];
 					var places = JSON.parse(localStorage.getItem('places'));
 					var completed = JSON.parse(localStorage.getItem('completed'));
@@ -371,8 +371,10 @@
 			function destroyDialog(){
 				$("#popup").dialog('close');
 			}
-
 		});
+
+	console.log('printing');
+
 	</script>
 
 	</head>
@@ -380,6 +382,7 @@
 		<h1 align="center">DiscoverMe</h1>
 		<p align="center" id="qresults">You should visit: </p>
 		<h2><div id="theElements"></div>
+		<div id="message"></div>
 		<div id="popup"></div></h2>
 	</body>
 </html>
