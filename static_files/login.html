@@ -2,38 +2,17 @@
 
 <html>
 	<head>
-
-		<style type="text/css">
-			h1{
-				font-size: 25px;
-				font-family: sans-serif;
-				color: #336699;
-			}
-			h2{
-				color: #336699;
-			}
-			html{
-				background: url(compass.jpg) no-repeat;
-				background-style: ;
-				-webkit-background-size: cover;
-				-moz-background-size: cover;
-				-o-background-size: cover;
-				background-size: cover; 
-			}
-			a{
-				color:white;
-				font-style: italic;
-				text-shadow: 1px 1px 0px #FF14C4
-			}
-			a:hover{
-				color:lime;
-				font-style: normal;
-				text-shadow: 1px 1px 0px #FF00FF
-			}
-			
-		</style>
+		<meta charset=utf-8/>
+		<meta name="description" content="description">
+ 
+		<title>DiscoverMe | Home</title>
+ 
+		<link rel="stylesheet" media="screen" href="style.css" />
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="http://dinbror.dk/bpopup/assets/jquery.bpopup-0.9.4.min.js"></script>
+		<script src="http://dinbror.dk/bpopup/assets/jquery.easing.1.3.js"></script>
 		<script type="text/javascript">
 
 		function goToLogin(){
@@ -43,10 +22,11 @@
 		$(document).ready(function(){
 
 			if(localStorage.getItem('username') && localStorage.getItem('password')){
+				$("#person").append("Hello, " + localStorage.getItem('username')+"!");
 				$("#location").append("Home Location:  " + localStorage.getItem('city') + ", " + localStorage.getItem('state') + ", " + localStorage.getItem('country'));
 				/*this is where we would implement the future destinations based off of the quiz results. We would set the values into a list and separate them by commas. Or we could just have a for loop here iterating through the list and we could add a comma between each iteration. Probably the second option would be easiest. Just throwing this in here now although the quiz is not fully made yet. 
 				/*$("#destlocation").append("Desired Destinations: "+localStorage.getItem('destinations'))*/
-				$("#person").append(localStorage.getItem('username'));
+				
 			} else {
 				goToLogin();
 			}
@@ -54,30 +34,6 @@
 			$('#logout').click(function(){
 				localStorage.clear();
 				window.location = 'http://localhost:3000/test.html';
-			});
-			$('#quiz').click(function(){
-				window.location='http://localhost:3000/quiz.html';
-			});
-
-			$('#update').click(function(){
-				window.location='http://localhost:3000/update.html';
-			});
-
-			$('#delete').click(function(){
-				window.location='http://localhost:3000/delete.html';
-			});
-
-			$('#create').click(function(){
-				window.location='http://localhost:3000/createEvent.html';
-			});
-			$('#bucket').click(function(){
-				window.location='http://localhost:3000/bucketList.html';
-			});
-			$('#complete').click(function(){
-				window.location='http://localhost:3000/completed.html';
-			});
-			$('#search').click(function(){
-				window.location='http://localhost:3000/search.html';
 			});
 		});
 
@@ -87,18 +43,22 @@
 	</head>
 
 	<body>
-
-		<h1 align="center">Hello</h1>
-		<h2><div align="center" id = "person"></div></h2>
-		<h2><div id = "location"></div></h2>
-		<!--<img align="center" src="smile.gif" style="width: 500px;"/>!-->
-		<button style="float: right" id = "logout">Logout</button>
-		<button style="float: center" id="quiz">Quiz</button></br></br>
-		<button style="float: left" id="update">Update Account</button></br></br>
-		<button style="float: left" id="delete">Delete Account</button></br></br>
-		<button style="float: left" id="create">Create Event</button></br></br>
-		<button style="float: center" id="bucket">Go To Bucket List</button></br></br>
-		<button style="float: center" id="complete">Go To Completed List</button></br></br>
-		<button style="float: center" id="search">Search</button>
+			<h1 class="header" height="50px">DiscoverMe
+			<button style="float: right"id="logout">Logout</button>
+				<ul class="nav">
+ 					<li><a href="login.html" class="is-active">Home</a></li>
+ 					<li><a href="quiz.html">Quiz</a></li>
+ 					<li><a href="bucketList.html">Bucket List: Current</a></li>
+ 					<li><a href="completed.html">Bucket List: Completed</a></li>
+ 					<li><a href="createEvent.html">Create Event</a></li>
+ 					<li><a href="search.html">Search</a></li>
+ 					<!--be sure to add settings html page!-->
+ 					<li><a href="settings.html">Settings</a></li>
+				</ul>
+			</h1>
+		<div class="mainpage">
+			<div id="person"></div><br/>
+			<div id="location"></div>
+		</div>
 	</body>
 </html>
