@@ -13,38 +13,16 @@
 
 <html>
 	<head>
-
+		<link rel="stylesheet" media="screen" href="style.css" />
 		<style type="text/css">
-			h1{
-				font-size: 70px;
-				font-family: Papyrus, fantasy;
-				font-weight:bold;
-				color: white;
-				text-shadow: 3px 3px 2px #000000;
-			}
-			h2{
-				text-align:center;
-				color: #336699;
-			}
-			html{
+			.mainpage{
 				background: url(paper.gif) no-repeat;
+				height:1000px;
 				background-attachment: fixed;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover; 
-			}
-			a{
-				font-size:17px;
-				color:black;
-				font-style: italic;
-				text-shadow: 1px 1px 0px white;
-			}
-			a:hover{
-				font-size:17px;
-				color:blue;
-				font-style: normal;
-				text-shadow: 1px 1px 0px white;
 			}
 			.myButtons{
 				color: black;
@@ -75,7 +53,7 @@
 			}
 			#popup .logo {
    				color: #2B91AF;
-    			font: bold 325% 'Petrona',sans;
+    			/*font: bold 325% 'Petrona',sans;*/
     			text-align: center;
 			}
 			.button.b-close, .button.bClose {
@@ -102,11 +80,9 @@
 				text-align:center;
 			}
 			.modal-body {
-		.modal-body {
-			.modal-body {
-    			min-height: 350px;
-    			-webkit-overflow-scrolling: touch;
-    			overflow: visible;
+    				min-height: 350px;
+    				-webkit-overflow-scrolling: touch;
+    				overflow: visible;
 			}
 			.fixed-dialog{
   				position: fixed;
@@ -114,7 +90,7 @@
   				left: 50px;
 			}
 			.ui-widget {
-    			font-family: Verdana,Arial,sans-serif;
+    			/*font-family: helvetica, sans-serif;*/
     			font-size: .8em;
     			opacity:1.0;
 			}
@@ -321,12 +297,23 @@
 	</head>
 
 	<body>
-
-		<h1 align="center" id="bucket">Bucket List</h1>
-		<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
-		<p style="position: absolute; top:180px; left:1170px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
-		<h2><div id="theElements"></div></h2>
-		<div id="popup"></div>
-		
+		<h1 class="header" height="50px">DiscoverMe
+			<button style="float: right"id="logout">Logout</button>
+				<ul class="nav">
+ 					<li><a href="login.html">Home</a></li>
+ 					<li><a href="quiz.html">Quiz</a></li>
+ 					<li><a href="bucketList.html" class="is-active">Bucket List: Current</a></li>
+ 					<li><a href="completed.html">Bucket List: Completed</a></li>
+ 					<li><a href="createEvent.html">Create Event</a></li>
+ 					<li><a href="search.html">Search</a></li>
+ 					<li><a href="settings.html">Settings</a></li>
+				</ul>
+			</h1>
+		<div class="mainpage">
+			<h1 align="center" id="bucket">Bucket List</h1>
+			<div style="position: absolute; top:220px; left:360px; width:700px; height:30px" id="message"></div>
+			<h2><div id="theElements"></div></h2>
+			<div id="popup"></div>
+		</div>
 	</body>
 </html>
