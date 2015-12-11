@@ -227,6 +227,13 @@
 
 
 		$(document).ready(function(){
+
+			$('#logout').click(function(){
+				localStorage.clear();
+				window.location = 'http://localhost:3000/test.html';
+			});
+
+
 			$('#popup').empty();
 			$('#popup').dialog({
 				width: 400,
@@ -448,7 +455,6 @@
 						var comma2 = document.createTextNode(", ");
 						var type = document.createTextNode(data[i].type);
 
-<<<<<<< HEAD
 						if(localStorage.getItem('places') !== '[]' && localStorage.getItem('places')){
 							for(var j = 0; j < places.length; j++){
 								if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
@@ -466,21 +472,6 @@
 									buttons[i].style.backgroundColor = "#ffffff";
 									break;
 								}
-=======
-						for(var j = 0; j < places.length; j++){
-							if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
-								buttons[i].setAttribute("disabled","disabled");
-								buttons[i].style.backgroundColor = "#ffffff";
-								break;
-							}
-						}
-
-						for(var k = 0; k < completed.length; k++){
-							if(completed[k].name === data[i].name && completed[k].city === data[i].city && completed[k].state === data[i].state && completed[k].country == data[i].country){
-								buttons[i].setAttribute("disabled","disabled");
-								buttons[i].style.backgroundColor = "#ffffff";
-								break;
->>>>>>> origin/master
 							}
 						}
 

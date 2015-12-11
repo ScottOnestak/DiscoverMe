@@ -65,6 +65,12 @@
 			$(document).ajaxError(function() {
     			alert("Sorry, there was a problem!");
   			});
+
+			$('#logout').click(function(){
+				localStorage.clear();
+				window.location = 'http://localhost:3000/test.html';
+			});
+  			
 			//user wishes to create a new account
 			$("#create").click(function(){
 				console.log("Create Clicked");

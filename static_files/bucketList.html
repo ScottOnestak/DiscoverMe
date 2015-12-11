@@ -80,17 +80,9 @@
 				text-align:center;
 			}
 			.modal-body {
-<<<<<<< HEAD
     				min-height: 350px;
     				-webkit-overflow-scrolling: touch;
     				overflow: visible;
-=======
-		.modal-body {
-			.modal-body {
-    			min-height: 350px;
-    			-webkit-overflow-scrolling: touch;
-    			overflow: visible;
->>>>>>> origin/master
 			}
 			.fixed-dialog{
   				position: fixed;
@@ -167,6 +159,11 @@
 		}
 
 		$(document).ready(function(){
+
+			$('#logout').click(function(){
+				localStorage.clear();
+				window.location = 'http://localhost:3000/test.html';
+			});
 
 			if(localStorage.getItem('username')){
 				$('#bucket').append(" for " + localStorage.getItem('username'));

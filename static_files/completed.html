@@ -67,6 +67,11 @@
 
 		$(document).ready(function(){
 
+			$('#logout').click(function(){
+				localStorage.clear();
+				window.location = 'http://localhost:3000/test.html';
+			});
+
 			if(localStorage.getItem('username')){
 				$('#bucket').append(" for " + localStorage.getItem('username'));
 			} else {

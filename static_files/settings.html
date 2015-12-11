@@ -36,6 +36,11 @@
 			$('#delete').click(function(){
 				window.location='http://localhost:3000/delete.html';
 			});
+
+			$('#logout').click(function(){
+				localStorage.clear();
+				window.location = 'http://localhost:3000/test.html';
+			});
 		});
 	</script>
 </head>

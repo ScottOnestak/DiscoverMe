@@ -1,37 +1,16 @@
 <html>
 	<title>DiscoverMe</title>
 	<head>
-<<<<<<< HEAD
 		<link 
 		<link rel="stylesheet" media="screen" href="style.css" />
 		<style type="text/css">
-=======
-		<style type="text/css">
-		h1{
-			font-size: 100px;
-			font-family: sans-serif;
-			color: white;
-			text-shadow: 2px 2px 0px #FF00FF
-		}
->>>>>>> origin/master
 		body{
 			background-color: #006699;
 			font-family: sans-serif;
 			color: #FFFFFF;
-<<<<<<< HEAD
 		}
 			h2{
 				font-size:20%;
-=======
-			font-size:20px;
-		}
-			#searchButton:hover{
-				font-style:italic;
-				color:#ff6600;
-			}
-			h2{
-				font-size:10px;
->>>>>>> origin/master
 				text-align:center;
 				color: #336699;
 			}
@@ -142,33 +121,22 @@
 				font-weight:bold;
 			}
 			#searchButton {
-<<<<<<< HEAD
 				position:absolute;
 				bottom:100px;
 				right:0px;
 				font-size: 20px;
 				/*!!!!MAY HAVE TO CHANGE COLOR TO WHITE AGAIN WITH BACKGROUND!!*/
 				color: black;
-=======
-				text-align:center;
-				font-size: 70px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
-				font-weight:bold;
-				color: white;
->>>>>>> origin/master
             	background-color: Transparent;
             	background-repeat:no-repeat;
             	border: none;
             	cursor:pointer;
             	overflow: hidden;
         	}
-<<<<<<< HEAD
         	#searchButton:hover{
 				font-style:italic;
 				color:gray;
 			}
-=======
->>>>>>> origin/master
         	.modal-body {
     			min-height: 350px;
     			-webkit-overflow-scrolling: touch;
@@ -181,38 +149,20 @@
   				left: 50px;
 			}
 			.ui-widget {
-<<<<<<< HEAD
     			font-family: helvetica, sans-serif;
     			font-size: .8em;
     			opacity:1.0;
 			}
-=======
-    			font-family: Verdana,Arial,sans-serif;
-    			font-size: .8em;
-    			opacity:1.0;
-			}
-
->>>>>>> origin/master
 			.ui-widget-content {
     			background: rgba(0,0,0,0);
     			color: #222222;
 			}
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 			.ui-dialog {
     			left: 0;
     			outline: 0 none;
     			padding: 0 !important;
-<<<<<<< HEAD
     			position: relative;
     			top: 0;
-=======
-    			position: absolute;
-    			top: 0;
-
->>>>>>> origin/master
 			}
 			.ui-dialog .ui-dialog-content {
 				background-color: #FFF;
@@ -243,7 +193,6 @@
 			.ui-widget-overlay {
    				background-color: white;
 			}
-<<<<<<< HEAD
 			.mainpage{
 				font-size:80px;
 			}
@@ -252,34 +201,23 @@
 				text-align:center;
 				font-weight:normal;
 			}
-=======
-			#qresults{
-				font-size:80px;
-			}
->>>>>>> origin/master
 		</style>
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 		<script type="text/javascript">
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 		function goToErrorPage(){
 			window.location='http://localhost:3000/error.html';
 		}
 	
 		$(document).ready(function(){
-<<<<<<< HEAD
+
+			$('#logout').click(function(){
+				localStorage.clear();
+				window.location = 'http://localhost:3000/test.html';
+			});
+
 			if(localStorage.getItem('results') &&localStorage.getItem('locationResults')){
 				$('#qresults').append( localStorage.getItem('results')+ "," + localStorage.getItem('locationResults'));
-=======
-
-			if(localStorage.getItem('results') && localStorage.getItem('locationResults')){
-
-				$('#qresults').append( localStorage.getItem('results')+ "," + localStorage.getItem('locationResults'));
-
->>>>>>> origin/master
 				$.ajax({
 						url: "search/country/" + localStorage.getItem('locationResults'),
 						type: "GET",
@@ -300,24 +238,15 @@
 							goToErrorPage();
 						}
 					});
-<<<<<<< HEAD
 			} 
 			function createElements(data){
-=======
-			}
-			
-			 function createElements(data){
->>>>>>> origin/master
 				var theString = data.length;
 				console.log(theString);
 				if(data.length == 0){
 					$('#message').html("There are no search results found");
 				} else {
-<<<<<<< HEAD
 					//document.getElementById('theElements').appendChild(document.createElement("BR"));
 					//document.getElementById('theElements').appendChild(document.createElement("BR"));
-=======
->>>>>>> origin/master
 					var buttons = [];
 					var places = JSON.parse(localStorage.getItem('places'));
 					var completed = JSON.parse(localStorage.getItem('completed'));
@@ -333,7 +262,6 @@
 						var comma1 = document.createTextNode(", ");
 						var comma2 = document.createTextNode(", ");
 						var type = document.createTextNode(data[i].type);
-<<<<<<< HEAD
 						if(localStorage.getItem('places') && localStorage.getItem('places') !== '[]'){
 							for(var j = 0; j < places.length; j++){
 								if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
@@ -353,25 +281,6 @@
 								}
 							}
 						}
-=======
-
-						for(var j = 0; j < places.length; j++){
-							if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
-								buttons[i].setAttribute("disabled","disabled");
-								buttons[i].style.backgroundColor = "#ffffff";
-								break;
-							}
-						}
-
-						for(var k = 0; k < completed.length; k++){
-							if(completed[k].name === data[i].name && completed[k].city === data[i].city && completed[k].state === data[i].state && completed[k].country == data[i].country){
-								buttons[i].setAttribute("disabled","disabled");
-								buttons[i].style.backgroundColor = "#ffffff";
-								break;
-							}
-						}
-
->>>>>>> origin/master
 						buttons[i].setAttribute("id", JSON.stringify(data[i]));
 						buttons[i].setAttribute("class", "myButtons");
 						buttons[i].setAttribute("width", "400px");
@@ -392,18 +301,9 @@
 					}
 				}
 			}
-<<<<<<< HEAD
 			function myFunction(){
 				var id = this.id;
 				var info = JSON.parse(this.id);
-=======
-
-			function myFunction(){
-
-				var id = this.id;
-				var info = JSON.parse(this.id);
-
->>>>>>> origin/master
 				$.ajax({
 					url: "places/" + localStorage.getItem('username') + "/" + localStorage.getItem('password'),
 					type: "POST",
@@ -437,21 +337,10 @@
     								duration: 200
   								}
 							}); 
-<<<<<<< HEAD
 							var html = $("#popup").html();
                 			$("#popup").html(html + "<br>Successfully added:<br><br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
                 			setTimeout(destroyDialog, 3000);
 						} else {
-=======
-
-							var html = $("#popup").html();
-                			$("#popup").html(html + "<br>Successfully added:<br><br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
-
-                			setTimeout(destroyDialog, 3000);
-
-						} else {
-
->>>>>>> origin/master
 							$('#popup').empty();
 							$('#popup').dialog({
 								width: 300,
@@ -468,34 +357,19 @@
 							}); 
 							var html = $("#popup").html();
                 			$("#popup").html(html + "<br>Could not add<br>" + info.name + "<br>" + info.city + ", " + info.state + ", " + info.country + "<br>" + info.type + "<br><br> to your bucket list");
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
                 			setTimeout(destroyDialog, 3000);
 						}
 					}
 				});				
 			}
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/master
 			function destroyDialog(){
 				$("#popup").dialog('close');
 			}
 		});
-<<<<<<< HEAD
-=======
-
-	console.log('printing');
-
->>>>>>> origin/master
 	</script>
 
 	</head>
 	<body>
-<<<<<<< HEAD
 			<h1 class="header" height="50px">DiscoverMe
 			<button style="float: right"id="logout">Logout</button>
 				<ul class="nav">
@@ -516,12 +390,3 @@
 			<div id="popup"></div></h2>
 	</body>
 </html>
-=======
-		<h1 align="center">DiscoverMe</h1>
-		<p align="center" id="qresults">You should visit: </p>
-		<h2><div id="theElements"></div>
-		<div id="message"></div>
-		<div id="popup"></div></h2>
-	</body>
-</html>
->>>>>>> origin/master
