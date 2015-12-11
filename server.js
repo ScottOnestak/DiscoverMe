@@ -612,7 +612,7 @@ app.get('/search/country/*', function(req,res){
 	return;
 });
 
-app.put('/qresults', function(req,res){
+app.post('/qresults', function(req,res){
 	console.log("put quiz results was called");
 	//might have to change this because it's not technically postBody
 	var postBody = req.body;
@@ -657,13 +657,14 @@ app.put('/qresults', function(req,res){
 	}else if(rCount> mCount && rCount > dCount && rCount> sCount){
 		res.send({city:"rio",
 				country:"brazil"});
+		return;
 	}else if(sCount > mCount && sCount > dCount && sCount > rCount){
 		res.send({city:"sydney",
 				country:"australia"});
 		return;
 	}else{
-		console.log("could not calculate country")
-		res.send({status: "ERROR"});
+		res.send({city:"rio",
+				country:"brazil"});
 		return;
 	}
 	return;
