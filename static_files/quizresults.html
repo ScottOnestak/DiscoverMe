@@ -1,0 +1,35 @@
+<html>
+<title>DiscoverMe</title>
+<head>
+<style type="text/css">
+	h1{
+				font-size: 100px;
+				font-family: sans-serif;
+				color: white;
+				text-shadow: 2px 2px 0px #FF00FF
+	}
+	body{
+				background-color: #006699;
+				font-family: sans-serif;
+				color: #FFFFFF;
+				font-size:80px;
+}
+</style>
+<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+			if(localStorage.getItem('results') &&localStorage.getItem('locationResults')){
+				$('#qresults').append(" for " + localStorage.getItem('results')+ "," + localStorage.getItem('locationResults'));
+			} 
+</script>
+
+</head>
+<body>
+<h1 align="center">DiscoverMe</h1>
+<p align="center" id="qresults">You should visit: </p>
+
+</body>
+
+
+</html>
