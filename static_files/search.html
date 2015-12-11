@@ -13,7 +13,8 @@
 
 <html>
 	<head>
-
+		<title>DiscoverMe | Home</title>
+		<link rel="stylesheet" media="screen" href="style.css" />
 		<style type="text/css">
 			h1{
 				text-align:center;
@@ -22,15 +23,11 @@
 				font-weight:bold;
 				color: white;
 			}
-			#searchButton:hover{
-				font-style:italic;
-				color:#ff6600;
-			}
 			h2{
 				text-align:center;
 				color: #336699;
 			}
-			html{
+			body{
 				background-color:transparent;
 				background: url(world.jpg) no-repeat;
 				-webkit-background-size: cover;
@@ -64,7 +61,7 @@
 			}
 			#message{
 				font-size: 30px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+				font-family: helvetica, sans-serif;
 				font-weight:bold;
 				color: #cc0000;
 			}
@@ -142,17 +139,19 @@
 				font-weight:bold;
 			}
 			#searchButton {
-				text-align:center;
-				font-size: 70px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
-				font-weight:bold;
-				color: white;
+				position: absolute;
+				bottom:100px;
+				right:0px;
+				font-size: 20px;
+				color: black;
             	background-color: Transparent;
-            	background-repeat:no-repeat;
-            	border: none;
+            	border:none;
             	cursor:pointer;
-            	overflow: hidden;
         	}
+        	#searchButton:hover{
+				color:gray;
+				font-style:italic;
+			}
         	.modal-body {
     			min-height: 350px;
     			-webkit-overflow-scrolling: touch;
@@ -178,7 +177,7 @@
     			left: 0;
     			outline: 0 none;
     			padding: 0 !important;
-    			position: absolute;
+    			position: relative;
     			top: 0;
 
 			}
@@ -430,6 +429,7 @@
 				console.log(theString);
 				if(data.length == 0){
 					$('#message').html("There are no search results found");
+					$('#searchbutton').click($("#popup").html());
 				} else {
 					document.getElementById('theElements').appendChild(document.createElement("BR"));
 					document.getElementById('theElements').appendChild(document.createElement("BR"));
@@ -565,11 +565,24 @@
 	</head>
 
 	<body>
-
-		<h1><button id="searchButton">Search</button></h1>
-		<div style="position: absolute; top:300px; left:450px; width:800px; height:30px" id="message"></div>
-		<p style="position: absolute; top:20px; left:1180px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
-		<h2><div id="theElements"></div></h2>
-		<div id="popup"></div>
+			<h1 class="header" height="50px">DiscoverMe
+			<button style="float: right"id="logout">Logout</button>
+				<ul class="nav">
+ 					<li><a href="login.html" class="is-active">Home</a></li>
+ 					<li><a href="quiz.html">Quiz</a></li>
+ 					<li><a href="bucketList.html">Bucket List: Current</a></li>
+ 					<li><a href="completed.html">Bucket List: Completed</a></li>
+ 					<li><a href="createEvent.html">Create Event</a></li>
+ 					<li><a href="search.html">Search</a></li>
+ 					<!--be sure to add settings html page!-->
+ 					<li><a href="settings.html">Settings</a></li>
+				</ul>
+			</h1>
+		<div class="mainpage">
+			<div style="position: absolute; top:300px; left:450px; width:800px; height:30px" id="message"></div>
+			<h2><div id="theElements"></div></h2>
+			<div id="popup"></div>
+			<button id="searchButton">Search Again</button>
+		</div>
 	</body>
 </html>
