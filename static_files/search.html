@@ -19,7 +19,7 @@
 			h1{
 				text-align:center;
 				font-size: 70px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+				font-family: helvetica, sans-serif;
 				font-weight:bold;
 				color: white;
 			}
@@ -147,6 +147,7 @@
             	background-color: Transparent;
             	border:none;
             	cursor:pointer;
+            	overflow:hidden;
         	}
         	#searchButton:hover{
 				color:gray;
@@ -163,7 +164,7 @@
   				left: 50px;
 			}
 			.ui-widget {
-    			font-family: Verdana,Arial,sans-serif;
+    			font-family: helvetica,sans-serif;
     			font-size: .8em;
     			opacity:1.0;
 			}
@@ -568,13 +569,12 @@
 			<h1 class="header" height="50px">DiscoverMe
 			<button style="float: right"id="logout">Logout</button>
 				<ul class="nav">
- 					<li><a href="login.html" class="is-active">Home</a></li>
+ 					<li><a href="login.html">Home</a></li>
  					<li><a href="quiz.html">Quiz</a></li>
  					<li><a href="bucketList.html">Bucket List: Current</a></li>
  					<li><a href="completed.html">Bucket List: Completed</a></li>
  					<li><a href="createEvent.html">Create Event</a></li>
- 					<li><a href="search.html">Search</a></li>
- 					<!--be sure to add settings html page!-->
+ 					<li><a href="search.html" class="is-active">Search</a></li>
  					<li><a href="settings.html">Settings</a></li>
 				</ul>
 			</h1>
