@@ -41,25 +41,16 @@
 			$(document).ajaxError(function() {
     			alert("Sorry, there was a problem!");
   			});
-			//user wishes to create a new account
-			$("#submitanswers").click(function(){
+			//quiz submission ajax call for answers
+			/*$("#submit").click(function(){*/
+				/*$("#qanswers").submit(function (event){*/
 				console.log("Submit Clicked");
+				console.log($(q1).val() + $(q2).val());
 				$.ajax({
 					url: "qresults/",
-					type: "PUT",
+					type: "POST",
 					dataType: "JSON",
-					data: { 
-							/*q1: $("input[@name=q1]:checked").val(),
-							q2: $("input[@name=q2]:checked").val(),
-							q3: $("input[@name=q3]:checked").val(),
-							q4: $("input[@name=q4]:checked").val(),
-							q5: $("input[@name=q5]:checked").val(),
-							q6: $("input[@name=q6]:checked").val(),
-							q7: $("input[@name=q7]:checked").val(),
-							q8: $("input[@name=q8]:checked").val(),
-							q9: $("input[@name=q9]:checked").val(),
-							q10: $("input[@name=q10]:checked").val()},*/
-							q1: $("#view").val(),
+					data: {/* q1: $("#view").val(),
 							q2: $("#tradition").val(),
 							q3: $("#alcohol").val(),
 							q4: $("#food").val(),
@@ -68,7 +59,17 @@
 							q7: $("#other").val(),
 							q8: $("#freetime").val(),
 							q9: $("#street").val(),
-							q10: $("#nature").val()},
+							q10: $("#nature").val()},*/
+							"q1": $("#view").val(),
+							"q2": $("#tradition").val(),
+							"q3": $("#alcohol").val(),
+							"q4": $("#food").val(),
+							"q5": $("#weekends").val(),
+							"q6": $("#landmark").val(),
+							"q7": $("#other").val(),
+							"q8": $("#freetime").val(),
+							"q9": $("#street").val(),
+							"q10": $("#nature").val()},
 					success: function(data){
 						console.log("Successful submission");
 						console.log(data);
@@ -94,102 +95,172 @@
 					}
 				});
 			});
-		});
+		/*});
+/*
+	$.ajax({
+        type: "POST",
+        data: $("#qanswers").serialize(),
+        url: "qresults/",
+        success: function(data)
+        {   
+           
+
+
+        }
+    });*/
+
 </script>
 </head>
 <body>
 	<h1 align="center">DiscoverMe</h1>
-	<form>
+	<form id="qanswers"> <!--action="qresults/"MIGHT HAVE TO CHANGE TO /QRESULTS !-->
 	<p align="center"><h>1. Which view would you like to wake up to?</h><br/>
 	<label>
 		<input type="radio" name="q1" value="a" id="view"/>
-		<img src="mmorning.jpg" style="width:200px;height:190px;">
+		<img src="mmorning.jpg" style="width:200px;height:190px;"/>
 	</label>
-	<!--<input type="image" name="q1" value="a" id="Madrid" src="mmorning.jpg"style="width:200px;height:190px;" alt="radio"><label for="q1a"></label><br/>!-->
-	<input type="image" name="q1" value="b" id="view" src="dmorning.jpg"style="width:200px;height:190px;"><label for="q1b"></label><br/>
-	<input type="image" name="q1" value="c" id="view" src="rmorning.jpeg"style="width:200px;height:190px;"><label for="q1c"></label><br/>
-	<input type="image" name="q1" value="d" id="view" src="smorning.jpg"style="width:200px;height:190px;"><label for="q1d" id="view"></label><br/>
+	<label>
+		<input type="radio" name="q1" value="b" id="view"/>
+		<img src="dmorning.jpg" style="width:200px;height:190px;"/>
+	</label>
+	<label>
+		<input type="radio" name="q1" value="c" id="view">
+		<img src="rmorning.jpeg"style="width:200px;height:190px;"/>
+	</label>
+	<label>
+		<input type="radio" name="q1" value="d" id="view">
+		<img src="smorning.jpg" style="width:200px;height:190px;"/>
+	</label>
 	</p>
+
 	<p align="center"><h>2. What cultural tradition sounds fun to you?</h><br/>
 		<label>
-		<input type="radio" name="q2" value="a" id="tradition"/>
-		<img src="bullfighting.jpg" style="width:200px;height:190px;">
-	</label>
-	<!--<input type="image" name="q2" value="a" id="Madrid" src="bullfighting.jpg"style="width:200px;height:190px;"><label for="q2a"></label><br/>!-->
-	<input type="image" name="q2" value="b" id="tradition"src="stpatricks.jpg"style="width:200px;height:190px;"><label for="q2b"></label><br/>
-	<input type="image" name="q2" value="c" id="tradition" src="carnival.jpg"style="width:200px;height:190px;"><label for="q2c"></label><br/>
-	<input type="image" name="q2" value="d" id="tradition" src="sfestival.jpg"style="width:200px;height:190px;"><label for="q2d"></label><br/>
+			<input type="radio" name="q2" value="a" id="tradition"/>
+			<img src="bullfighting.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q2" value="b" id="tradition"/>
+			<img src="stpatricks.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q2" value="c" id="tradition"/>
+			<img src="carnival.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q2" value="d" id="tradition"/>
+			<img src="sfestival.jpg" style="width:200px;height:190px;"/>
+		</label>
 	</p>
 	<p align="center"><h>3. What's your favorite alcohol?</h><br/>
 		<input type="radio" name="q3" value="a" id="alcohol"><label for="q3a">Wine</label><br/>
-	<input type="radio" name="q3" value="b" id="alcohol"><label for="q3b">Dry Stout</label><br/>
-	<input type="radio" name="q3" value="c" id="alcohol"><label for="q3c">Sugar Cane Spirit</label><br/>
-	<input type="radio" name="q3" value="d" id="alcohol"><label for="q3d">Rum</label><br/>
+		<input type="radio" name="q3" value="b" id="alcohol"><label for="q3b">Dry Stout</label><br/>
+		<input type="radio" name="q3" value="c" id="alcohol"><label for="q3c">Sugar Cane Spirit</label><br/>
+		<input type="radio" name="q3" value="d" id="alcohol"><label for="q3d">Rum</label><br/>
 	</p>
 	<p align="center"><h>4. Which food looks the most delicious to you?</h><br/>
 		<label>
-		<input type="radio" name="q4" value="a" id="food"/>
-		<img src="paella.jpg" style="width:200px;height:190px;">
-	</label>
-	<!--<input type="image" name="q4" value="a" id="Madrid" src="paella.jpg"style="width:200px;height:190px;"><label for="q4a"></label><br/>!-->
-	<input type="image" name="q4" value="b" id="food" src="shepherdspie.jpg"style="width:200px;height:190px;"><label for="q4b"></label><br/>
-	<input type="image" name="q4" value="c" id="food" src="masala.jpg"style="width:200px;height:190px;"><label for="q4c"></label><br/>
-	<input type="image" name="q4" value="d" id="food" src="barramundi.jpg"style="width:200px;height:190px;"><label for="q4d"></label><br/>
+			<input type="radio" name="q4" value="a" id="food"/>
+			<img src="paella.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q4" value="b" id="food"/>
+			<img src="shepherdspie.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q4" value="c" id="food"/>
+			<img src="masala.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q4" value="d" id="food"/>
+			<img src="barramundi.jpg" style="width:200px;height:190px;"/>
+		</label>
 	</p>
 	<p align="center"><h>5. What would you like to do on the weekends?</h><br/>
-	<input type="radio" name="q5" value="a" id="weekends"><label for="q5a">Live Music & Drinks</label><br/>
-	<input type="radio" name="q5" value="b" id="weekends"><label for="q5b">Pub Atmosphere</label><br/>
-	<input type="radio" name="q5" value="c" id="weekends"><label for="q5c">Lounging on Beach</label><br/>
-	<input type="radio" name="q5" value="d" id="weekends"><label for="q5d">Clubbing</label><br/>
+		<input type="radio" name="q5" value="a" id="weekends"><label for="q5a">Live Music & Drinks</label><br/>
+		<input type="radio" name="q5" value="b" id="weekends"><label for="q5b">Pub Atmosphere</label><br/>
+		<input type="radio" name="q5" value="c" id="weekends"><label for="q5c">Lounging on Beach</label><br/>
+		<input type="radio" name="q5" value="d" id="weekends"><label for="q5d">Clubbing</label><br/>
 	</p>
 	<p align="center"><h>6. Which landmark is the coolest?</h><br/>
 		<label>
-	<input type="radio" name="q6" value="a" id="landmark"/>
-	<img src="mlandmark.jpg" style="width:200px;height:190px;">
-</label>
-	<!--<input type="image" name="q6" value="a" id="Madrid" src="mlandmark.jpg" style="width:200px;height:190px;"><label for="q6a"></label><br/>!-->
-	<input type="image" name="q6" value="b" id="landmark" src="dlandmark.jpg"style="width:200px;height:190px;"><label for="q6b"></label><br/>
-	<input type="image" name="q6" value="c" id="landmark" src="rlandmark.jpg"style="width:200px;height:190px;"><label for="q6c"></label><br/>
-	<input type="image" name="q6" value="d" id="landmark" src="slandmark.jpg"style="width:200px;height:190px;"><label for="q6d"></label><br/>
+			<input type="radio" name="q6" value="a" id="landmark"/>
+			<img src="mlandmark.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q6" value="b" id="landmark"/>
+			<img src="dlandmark.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q6" value="c" id="landmark"/>
+			<img src="rlandmark.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q6" value="d" id="landmark"/>
+			<img src="slandmark.jpg" style="width:200px;height:190px;"/>
+		</label>
 	</p>
 	<p align="center"><h>7. How many other countries would you like to visit?</h><br/>
-	<input type="radio" name="q7" value="a" id="other"><label for="q7a">10+</label><br/>
-	<input type="radio" name="q7" value="b" id="other"><label for="q7b">5</label><br/>
-	<input type="radio" name="q7" value="c" id="other"><label for="q7c">6-10<label><br/>
-	<input type="radio" name="q7" value="d" id="other"><label for="q7d">1-2</label><br/>
+		<input type="radio" name="q7" value="a" id="other"><label for="q7a">10+</label><br/>
+		<input type="radio" name="q7" value="b" id="other"><label for="q7b">5</label><br/>
+		<input type="radio" name="q7" value="c" id="other"><label for="q7c">6-10<label><br/>
+		<input type="radio" name="q7" value="d" id="other"><label for="q7d">1-2</label><br/>
 	</p>
 	<p align="center"><h>8. Which is the ideal way to spend your free time?</h><br/>
 		<label>
-	<input type="radio" name="q8" value="a" id="freetime"/>
-	<img src="mcool.jpg" style="width:200px;height:190px;">
-</label>
-	<!--<input type="image" name="q8" value="a" id="Madrid" src="mcool.jpg"style="width:200px;height:190px;"><label for="q8a"></label><br/>!-->
-	<input type="image" name="q8" value="b" id="freetime" src="dcool.jpg"style="width:200px;height:190px;"><label for="q8b"></label><br/>
-	<input type="image" name="q8" value="c" id="freetime" src="rcool.jpg"style="width:200px;height:190px;"><label for="q8c"></label><br/>
-	<input type="image" name="q8" value="d" id="freetime" src="scool.jpg"style="width:200px;height:190px;"><label for="q8d"></label><br/>
+			<input type="radio" name="q8" value="a" id="freetime"/>
+			<img src="mcool.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q8" value="b" id="freetime"/>
+			<img src="dcool.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q8" value="c" id="freetime"/>
+			<img src="rcool.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q8" value="d" id="freetime"/>
+			<img src="scool.jpg" style="width:200px;height:190px;"/>
+		</label>
 	</p>
 	<p align="center"><h>9. What type of city street appeals to you the most?</h><br/>
 		<label>
-		<input type="radio" name="q9" value="a" id="street"/>
-		<img src="madrid.jpg" style="width:200px;height:190px;">
-	</labeL>
-	<!--<input type="image" name="q9" value="a" id="Madrid" src="madrid.jpg"style="width:200px;height:190px;"><label for="q9a"></label><br/>!-->
-	<input type="image" name="q9" value="b" id="street" src="dublin.jpg"style="width:200px;height:190px;"><label for="q9b"></label><br/>
-	<input type="image" name="q9" value="c" id="street" src="rio.jpg"style="width:200px;height:190px;"><label for="q9c"></label><br/>
-	<input type="image" name="q9" value="d" id="street" src="sydney.jpg"style="width:200px;height:190px;"><label for="q9d"></label><br/>
+			<input type="radio" name="q9" value="a" id="street"/>
+			<img src="madrid.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q9" value="b" id="street"/>
+			<img src="dublin.jpg" style="width:200px;height:190px;"/>
+		</labeL>
+		<label>
+			<input type="radio" name="q9" value="c" id="street"/>
+			<img src="rio.jpg" style="width:200px;height:190px;"/>
+		</labeL>
+		<label>
+			<input type="radio" name="q9" value="d" id="street"/>
+			<img src="sydney.jpg" style="width:200px;height:190px;"/>
+		</labeL>
 	</p>
 	<p align="center"><h>10. Where would you like to go?</h><br/>
 		<label>
-		<input type="radio" name="q10" value="a" id="nature"/>
-		<img src="mnature.jpg" style="width:200px;height:190px;">
-	</label>
-	<!--<input type="image" name="q10" value="a" id="Madrid"src="mnature.jpg"style="width:200px;height:190px;"><label for="q10a"></label><br/>!-->
-	<input type="image" name="q10" value="b" id="nature"src="doutdoors.jpg"style="width:200px;height:190px;"><label for="q10b"></label><br/>
-	<input type="image" name="q10" value="c" id="nature"src="routdoors.jpg"style="width:200px;height:190px;"><label for="q10c"></label><br/>
-	<input type="image" name="q10" value="d" id="nature"src="soutdoors.jpg"style="width:200px;height:190px;"><label for="q0d"><label><br/>
+			<input type="radio" name="q10" value="a" id="nature"/>
+			<img src="mnature.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q10" value="b" id="nature"/>
+			<img src="doutdoors.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q10" value="c" id="nature"/>
+			<img src="routdoors.jpg" style="width:200px;height:190px;"/>
+		</label>
+		<label>
+			<input type="radio" name="q10" value="d" id="nature"/>
+			<img src="soutdoors.jpg" style="width:200px;height:190px;"/>
+		</label>
 	</p>
 	<p align="center">Click submit to find your country!</p>
-	<p align="center"><input type="submit" id="submitanswers">Submit<br/></p>
+	<p align="center"><input type="submit" value="submit"></p>
 	</form>
 </body>
 		
