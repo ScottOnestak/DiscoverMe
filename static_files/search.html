@@ -13,34 +13,23 @@
 
 <html>
 	<head>
-
+		<title>DiscoverMe | Home</title>
+		<link rel="stylesheet" media="screen" href="style.css" />
 		<style type="text/css">
 			h1{
 				text-align:center;
 				font-size: 70px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+				font-family: helvetica, sans-serif;
 				font-weight:bold;
 				color: white;
-			}
-			#searchButton:hover{
-				font-style:italic;
-				color:#ff6600;
 			}
 			h2{
 				text-align:center;
 				color: #336699;
 			}
-			html{
+			body{
 				background-color:transparent;
-<<<<<<< HEAD
-<<<<<<< HEAD
 				background: url(world.jpg) no-repeat;
-=======
-				background: url(earth.gif) no-repeat;
->>>>>>> origin/master
-=======
-				background: url(world.jpg) no-repeat;
->>>>>>> origin/master
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
@@ -72,7 +61,7 @@
 			}
 			#message{
 				font-size: 30px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
+				font-family: helvetica, sans-serif;
 				font-weight:bold;
 				color: #cc0000;
 			}
@@ -85,15 +74,7 @@
 			#popup, .bMulti {
     			background-color: #FFF;
     			border-radius: 20px 20px 20px 20px;
-<<<<<<< HEAD
-<<<<<<< HEAD
     			box-shadow: 0 0 5px 5px #ffffff;
-=======
-    			box-shadow: 0 0 25px 5px #ffffff;
->>>>>>> origin/master
-=======
-    			box-shadow: 0 0 5px 5px #ffffff;
->>>>>>> origin/master
     			color: #111;
     			display: none;
     			min-width: 400px;
@@ -158,17 +139,18 @@
 				font-weight:bold;
 			}
 			#searchButton {
-				text-align:center;
-				font-size: 70px;
-				font-family: Impact, Haettenschweiler, 'Franklin Gothic Bold', Charcoal, 'Helvetica Inserat', 'Bitstream Vera Sans Bold', 'Arial Black', 'sans serif';
-				font-weight:bold;
+				position: absolute;
+				font-size: 50px;
 				color: white;
             	background-color: Transparent;
-            	background-repeat:no-repeat;
-            	border: none;
+            	border:none;
             	cursor:pointer;
-            	overflow: hidden;
+            	overflow:hidden;
         	}
+        	#searchButton:hover{
+				color:gray;
+				font-style:italic;
+			}
         	.modal-body {
     			min-height: 350px;
     			-webkit-overflow-scrolling: touch;
@@ -180,7 +162,7 @@
   				left: 50px;
 			}
 			.ui-widget {
-    			font-family: Verdana,Arial,sans-serif;
+    			font-family: helvetica,sans-serif;
     			font-size: .8em;
     			opacity:1.0;
 			}
@@ -194,7 +176,7 @@
     			left: 0;
     			outline: 0 none;
     			padding: 0 !important;
-    			position: absolute;
+    			position: relative;
     			top: 0;
 
 			}
@@ -206,8 +188,6 @@
     			overflow: auto;
    				position: relative;
     			padding: 25px;
-<<<<<<< HEAD
-<<<<<<< HEAD
     			box-shadow: 0 0 15px 15px #ffffff;
 			}
 			.ui-dialog-titlebar-close {
@@ -225,31 +205,6 @@
 			.ui-dialog-titlebar-close:hover{
 				background-color: #ff6600;
 				font-style: italic;
-=======
-    			box-shadow: 0 0 25px 25px #ffffff;
-			}
-			.ui-dialog-titlebar-close {
-  				visibility: hidden;
->>>>>>> origin/master
-=======
-    			box-shadow: 0 0 15px 15px #ffffff;
-			}
-			.ui-dialog-titlebar-close {
-  				background-color: #2B91AF;
-    			border-radius: 10px;
-    			box-shadow: 0 2px 3px rgba(225, 225, 225, 0.3);
-    			color: #FFF;
-    			cursor: pointer;
-    			display: inline-block;
-    			padding: 5px 10px;
-    			color:white;
-    			font-weight:bold;
-    			text-decoration: none;
-			}
-			.ui-dialog-titlebar-close:hover{
-				background-color: #ff6600;
-				font-style: italic;
->>>>>>> origin/master
 			}
 			.ui-widget-overlay {
    				background-color: white;
@@ -293,15 +248,7 @@
 			});
 
 			var html = $("#popup").html();
-<<<<<<< HEAD
-<<<<<<< HEAD
 			$("#popup").html(html + "<button id='Place' class='TheBUTTON'>Place</button><button id='Type' class='button'>Type</button><button id='City' class='button'>City</button><button id='State' class='button'>State</button><button id='Country' class='button'>Country</button><br><br><br><p id='field'>Search by Name</p><p align='center'>Name:<input id='name' type='text' size = '20'/></p><p align='center'><button id='nameSearch' class='theButton'>Search by Name</button></p>"); 
-=======
-			$("#popup").html(html + "<button id='Place' class='TheBUTTON'>Place</button><button id='Type' class='button'>Type</button><button id='City' class='button'>City</button><button id='State' class='button'>State</button><button id='Country' class='button'>Country</button><br><br><br><br><p id='field'>Search by Name</p><p align='center'>Name:<input id='name' type='text' size = '20'/></p><p align='center'><button id='nameSearch' class='theButton'>Search by Name</button></p>"); 
->>>>>>> origin/master
-=======
-			$("#popup").html(html + "<button id='Place' class='TheBUTTON'>Place</button><button id='Type' class='button'>Type</button><button id='City' class='button'>City</button><button id='State' class='button'>State</button><button id='Country' class='button'>Country</button><br><br><br><p id='field'>Search by Name</p><p align='center'>Name:<input id='name' type='text' size = '20'/></p><p align='center'><button id='nameSearch' class='theButton'>Search by Name</button></p>"); 
->>>>>>> origin/master
 
 			$(document).on('click', '.button', function(e){
 				console.log(e);
@@ -481,6 +428,7 @@
 				console.log(theString);
 				if(data.length == 0){
 					$('#message').html("There are no search results found");
+					$('#searchbutton').click($("#popup").html());
 				} else {
 					document.getElementById('theElements').appendChild(document.createElement("BR"));
 					document.getElementById('theElements').appendChild(document.createElement("BR"));
@@ -500,35 +448,23 @@
 						var comma2 = document.createTextNode(", ");
 						var type = document.createTextNode(data[i].type);
 
-						for(var j = 0; j < places.length; j++){
-							if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
-								buttons[i].setAttribute("disabled","disabled");
-<<<<<<< HEAD
-<<<<<<< HEAD
-								buttons[i].style.backgroundColor = "#ffffff";
-=======
-								buttons[i].style.backgroundColor = "#d9d9d9";
->>>>>>> origin/master
-=======
-								buttons[i].style.backgroundColor = "#ffffff";
->>>>>>> origin/master
-								break;
+						if(localStorage.getItem('places') !== '[]' && localStorage.getItem('places')){
+							for(var j = 0; j < places.length; j++){
+								if(places[j].name == data[i].name && places[j].city === data[i].city && places[j].state === data[i].state && places[j].country == data[i].country){
+									buttons[i].setAttribute("disabled","disabled");
+									buttons[i].style.backgroundColor = "#ffffff";
+									break;
+								}
 							}
 						}
-
-						for(var k = 0; k < completed.length; k++){
-							if(completed[k].name === data[i].name && completed[k].city === data[i].city && completed[k].state === data[i].state && completed[k].country == data[i].country){
-								buttons[i].setAttribute("disabled","disabled");
-<<<<<<< HEAD
-<<<<<<< HEAD
-								buttons[i].style.backgroundColor = "#ffffff";
-=======
-								buttons[i].style.backgroundColor = "#d9d9d9";
->>>>>>> origin/master
-=======
-								buttons[i].style.backgroundColor = "#ffffff";
->>>>>>> origin/master
-								break;
+						
+						if(localStorage.getItem('completed') !== '[]' && localStorage.getItem('completed')){
+							for(var k = 0; k < completed.length; k++){
+								if(completed[k].name === data[i].name && completed[k].city === data[i].city && completed[k].state === data[i].state && completed[k].country == data[i].country){
+									buttons[i].setAttribute("disabled","disabled");
+									buttons[i].style.backgroundColor = "#ffffff";
+									break;
+								}
 							}
 						}
 
@@ -574,7 +510,7 @@
 							localStorage['places'] = data.places;
 							//disable the button and change the color to a light green
 							document.getElementById(id).setAttribute("disabled","disabled");
-							document.getElementById(id).style.backgroundColor = "#99ff99";
+							document.getElementById(id).style.backgroundColor = "#ffffff";
 							//create a popup that lasts 2 seconds to tell the user that the item was added to their list
 							$('#popup').empty();
 							$('#popup').dialog({
@@ -632,11 +568,23 @@
 	</head>
 
 	<body>
-
-		<h1><button id="searchButton">Search</button></h1>
-		<div style="position: absolute; top:300px; left:450px; width:800px; height:30px" id="message"></div>
-		<p style="position: absolute; top:20px; left:1180px; width:150px; height:30px"><a href="http://localhost:3000/test.html">Return to Homepage</a></p>
-		<h2><div id="theElements"></div></h2>
-		<div id="popup"></div>
+			<h1 class="header" height="20px">DiscoverMe
+			<button style="float: right"id="logout">Logout</button>
+				<ul class="nav">
+ 					<li><a href="login.html">Home</a></li>
+ 					<li><a href="quiz.html">Quiz</a></li>
+ 					<li><a href="bucketList.html">Bucket List: Current</a></li>
+ 					<li><a href="completed.html">Bucket List: Completed</a></li>
+ 					<li><a href="createEvent.html">Create Event</a></li>
+ 					<li><a href="search.html" class="is-active">Search</a></li>
+ 					<li><a href="settings.html">Settings</a></li>
+				</ul>
+			</h1>
+		<div class="mainpage">
+			<div style="position: absolute; top:450px; left:450px; width:800px; height:30px" id="message"></div>
+			<h1><button id="searchButton">Search Again</button></h1>
+			<div id="popup"></div>
+			<h2><div id="theElements"></div></h2>
+		</div>
 	</body>
 </html>

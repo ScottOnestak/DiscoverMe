@@ -4,20 +4,16 @@
 	<head>
 
 		<title>DiscoverMe</title>
+		<link rel="stylesheet" media="screen" href="style.css" />
 
 		<style type="text/css">
-			html{
+		
+			.mainpage{
 				background: url(discover.png) no-repeat;
 				-webkit-background-size: cover;
 				-moz-background-size: cover;
 				-o-background-size: cover;
 				background-size: cover; 
-			}
-			h1{
-				font-size: 100px;
-				font-family: sans-serif;
-				color: white;
-				text-shadow: 2px 2px 1px #00cccc;
 			}
 			h2{
 				font-size: 20px;
@@ -55,25 +51,20 @@
 
 		<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript">
-
 		function goToHomePage(){
 			window.location = 'http://localhost:3000/login.html';
 		}
-
 		function goToErrorPage(){
 			window.location = 'http://localhost:3000/error.html';
 		}
-
 		function goToSuccessCreateEvent(){
-			window.location = 'http://localhost:3000/successCreateEvent.html';
+			window.location = 'http://localhost:3000/bucketList.html';
 		}
-
 		$(document).ready(function(){
 			//ajax error function
 			$(document).ajaxError(function() {
     			alert("Sorry, there was a problem!");
   			});
-
 			//user wishes to create a new account
 			$("#create").click(function(){
 				console.log("Create Clicked");
@@ -94,37 +85,31 @@
 						} else if(data.status == 'BLANK') {
 							console.log('Missing data');
 							$('#status').text("Please fill out all the information");
-
 							if($("#name").val() !== ""){
 								$("#name").css("background-color", "white");
 							} else {
 								$("#name").css("background-color", "#993333");
 							}
-
 							if($("#type").val() !== ""){
 								$("#type").css("background-color", "white");
 							} else {
 								$("#type").css("background-color", "#993333");
 							}
-
 							if($("#city").val() !== ""){
 								$("#city").css("background-color", "white");
 							} else {
 								$("#city").css("background-color", "#993333");
 							}
-
 							if($("#state").val() !== ""){
 								$("#state").css("background-color", "white");
 							} else {
 								$("#state").css("background-color", "#993333");
 							}
-
 							if($("#country").val() !== ""){
 								$("#country").css("background-color", "white");
 							} else {
 								$("#country").css("background-color", "#993333");
 							}
-
 						} else if(data.status == 'PLACES'){
 							$('#status').text("You already have this in your bucket list.");
 						} else if(data.status == 'COMPLETED'){
@@ -143,13 +128,23 @@
 				});
 			});
 		});
-
 		</script>
 	</head>
 
 	<body>
-
-		<h1><center>DiscoverMe</center></h1>
+		<h1 class="header" height="50px">DiscoverMe
+			<button style="float: right"id="logout">Logout</button>
+				<ul class="nav">
+ 					<li><a href="login.html" >Home</a></li>
+ 					<li><a href="quiz.html">Quiz</a></li>
+ 					<li><a href="bucketList.html">Bucket List: Current</a></li>
+ 					<li><a href="completed.html">Bucket List: Completed</a></li>
+ 					<li><a href="createEvent.html" class="is-active">Create Event</a></li>
+ 					<li><a href="search.html">Search</a></li>
+ 					<li><a href="settings.html">Settings</a></li>
+				</ul>
+			</h1>
+		<div class="mainpage">
 		<p id = "message">Create Event</p>
 		<h2>
 		<p>Name:<input id="name" type="text" size = "50"/></p>
@@ -176,8 +171,8 @@
 		</select><br>
 		<p><button id="create">Create Event</button></p>
 		<div id="status"></div>
-		<p align="center"><a href="http://localhost:3000/login.html">Return to Homepage</a></p>
 		</h2>
+	</div>
 
 	</body>
 </html>
